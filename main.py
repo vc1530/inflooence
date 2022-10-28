@@ -35,7 +35,7 @@ while i < len(songs_list):
     py_list.append(add)
     i += 1
     j += 1
-print(py_list)
+# print(py_list)
 
 # opening the csv file in 'w' mode
 file = open('db.csv', 'w', newline ='')
@@ -45,7 +45,7 @@ with file:
     header = ['Title', 'Artist']
     writer = csv.DictWriter(file, fieldnames = header)
     for title, artist in py_list:
-        writer.writerow({'Title': title, 'Artist': 'artist'})
+        writer.writerow({'Title': title, 'Artist': artist})
 
 try:
     conn = msql.connect(host='localhost', user='root',
@@ -58,7 +58,6 @@ except Error as e:
     print("Error while connecting to MySQL", e)
 
 irisData = pd.read_csv("db.csv")
-# print(irisData.to_string())
 irisData.head()
 cursor = None
 
