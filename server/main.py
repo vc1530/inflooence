@@ -11,11 +11,11 @@ import csv
 import mysql.connector as msql
 from mysql.connector import Error
 import pandas as pd
-
+import search_spotify
 
 browser_options = Options()
 browser_options.headless = True
-DRIVER_PATH = "./chromedriver"
+DRIVER_PATH = "../chromedriver"
 
 driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()), options = browser_options)
 
@@ -24,25 +24,28 @@ driver.get('https://tokboard.com/')
 soup = BeautifulSoup(driver.page_source, "html.parser")
 py_list = []
 songs_list = soup.select('.title')
-print(songs_list)
 
+artist_list = soup.select('.artist')
 
-for song in songs_list:
-    add = [song.get_text(), "temp artist"]
+i = 1
+j = 0
+
+while i < len(songs_list):
+    add = [songs_list[i].get_text(), artist_list[j].get_text()]
     py_list.append(add)
-print(songs_list)
+    i += 1
+    j += 1
+# print(py_list)
 
-# print(songs_list)
 # opening the csv file in 'w' mode
-file = open('db.csv', 'w', newline ='')
- 
+file = open('../db.csv', 'w', newline ='')
+
 with file:
-    # identifying header 
+    # identifying header
     header = ['Title', 'Artist']
     writer = csv.DictWriter(file, fieldnames = header)
     for title, artist in py_list:
-        writer.writerow({'Title': title, 'Artist': 'artist'})
-
+        writer.writerow({'Title': title, 'Artist': artist})
 
 try:
     conn = msql.connect(host='localhost', user='root',
@@ -54,8 +57,7 @@ try:
 except Error as e:
     print("Error while connecting to MySQL", e)
 
-irisData = pd.read_csv("db.csv")
-# print(irisData.to_string())
+irisData = pd.read_csv("../db.csv")
 irisData.head()
 cursor = None
 
