@@ -11,11 +11,11 @@ import csv
 import mysql.connector as msql
 from mysql.connector import Error
 import pandas as pd
-
+import search_spotify
 
 browser_options = Options()
 browser_options.headless = True
-DRIVER_PATH = "./chromedriver"
+DRIVER_PATH = "../chromedriver"
 
 driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()), options = browser_options)
 
@@ -38,7 +38,7 @@ while i < len(songs_list):
 # print(py_list)
 
 # opening the csv file in 'w' mode
-file = open('db.csv', 'w', newline ='')
+file = open('../db.csv', 'w', newline ='')
 
 with file:
     # identifying header
@@ -57,7 +57,7 @@ try:
 except Error as e:
     print("Error while connecting to MySQL", e)
 
-irisData = pd.read_csv("db.csv")
+irisData = pd.read_csv("../db.csv")
 irisData.head()
 cursor = None
 
