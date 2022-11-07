@@ -14,12 +14,24 @@ def search_sp(title, artist):
         spotify_id = results['tracks']['items'][0]["id"]
         features = sp.audio_features(spotify_id)
         # print(features[0]["acousticness"])
+        ac = features[0]["acousticness"]
+        dc = features[0]["danceability"]
+        en = features[0]["energy"]
+        live = features[0]["liveness"]
+        loud = features[0]["loudness"]
+        tempo = features[0]["tempo"]
+        time = features[0]["time_signature"]
     except:
         spotify_id = 0
-        features = 0
-    # search_title = results['tracks']['items'][0]["name"]
+        ac = 0
+        dc = 0
+        en = 0
+        live = 0
+        loud = 0
+        tempo = 0
+        time = 0
 
+    return [spotify_id, ac, dc, en, live, loud, tempo, time]
     # print(search_artist,spotifyID,search_title)
     # id, acousticness, danceability,energy, liveness, loudness, tempo, time_signature
-    return [spotify_id, features[0]["acousticness"], features[0]["danceability"], features[0]["energy"], features[0]["liveness"], features[0]["loudness"], features[0]["tempo"], features[0]["time_signature"]]
 
