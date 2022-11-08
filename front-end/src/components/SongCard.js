@@ -1,4 +1,4 @@
-import './Song.css' 
+import './SongCard.css' 
 import * as React from 'react';
 import Box from '@mui/material/Box';
 import Card from '@mui/material/Card';
@@ -10,15 +10,17 @@ import SkipPreviousIcon from '@mui/icons-material/SkipPrevious';
 import PlayArrowIcon from '@mui/icons-material/PlayArrow';
 import SkipNextIcon from '@mui/icons-material/SkipNext';
 import { useTheme } from '@mui/material/styles';
+import Link from '@mui/material/Link';
 
 const Song = props => {
   const theme = useTheme();
   return (
     <Card className = 'Song'>
+      <span className = "song-id">{props.id}</span>
       <Box sx={{ display: 'flex', flexDirection: 'column', width: 180, }}>
         <CardContent sx={{ flex: '1 0 auto', overflow: 'scroll', height: '70px' }}>
-          <Typography component="div" variant="h5">
-            {props.title} 
+          <Typography className="song-title" component="div" variant="h5">
+            <Link href={"/" + props.id}>{props.title}</Link>
           </Typography>
           <Typography variant="subtitle1" color="text.secondary" component="div">
             {props.first_name} {props.last_name} 

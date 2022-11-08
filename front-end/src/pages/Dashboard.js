@@ -1,13 +1,13 @@
 import './Dashboard.css' 
 import Header from '../components/Header' 
-import Song from '../components/Song'
+import Song from '../components/SongCard'
 import { useEffect, useState } from 'react'
 import Typography from '@mui/material/Typography';
 import axios from "axios"
 import Grid from '@mui/material/Grid';
-import CustomPopup from "./SongPopup"
+import CustomPopup from "../components/SongPopup"
 
-const Dashboard = () => { 
+const Dashboard = (props) => { 
 
     const [visibility, setVisibility] = useState(false);
 
@@ -19,15 +19,15 @@ const Dashboard = () => {
     const [search, setSearch] = useState('')
 
     useEffect(() => { 
-        axios.get('https://my.api.mockaroo.com/songs.json?key=60fe9c50')
-        .then (res => { 
-            console.log(res.data)
-            setSongs(res.data) 
-        }) 
-        .catch(err => { 
-            console.log(err) 
-        })
-    }, [])
+        // axios.get('https://my.api.mockaroo.com/songs.json?key=60fe9c50')
+        // .then (res => { 
+        //     setSongs(res.data) 
+        // }) 
+        // .catch(err => { 
+        //     console.log(err) 
+        // })
+        setSongs(props.songs)
+    }, [props.songs])
 
     return ( 
         <div> 
@@ -36,7 +36,7 @@ const Dashboard = () => {
                 Current Top Hits 
             </Typography>
             <Grid container spacing = {4} justifyContent='center' padding='20px'> 
-                {songs
+                {props.songs
                 .filter(song => { 
                     if (song === '') return song; 
                     else if (song.title.toLowerCase().includes(search.toLowerCase())) return song; 
@@ -50,13 +50,14 @@ const Dashboard = () => {
                                 cover = {song.cover} 
                                 first_name = {song.first_name} 
                                 last_name = {song.last_name} 
+                                id = {song.id} 
                             />
                         </Grid> 
                     ) 
                 })}
             </Grid>
-            <CustomPopup onClose={popupCloseHandler} show={visibility}>
-        </CustomPopup>
+            {/* <CustomPopup onClose={popupCloseHandler} show={visibility}>
+        </CustomPopup> */}
         </div>
     )
 }

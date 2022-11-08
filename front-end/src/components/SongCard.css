@@ -12,3 +12,7 @@
     transition: 200ms; 
 }
 
+.song-id { 
+    padding: 10px; 
+    font-size: 16pt; 
+}
