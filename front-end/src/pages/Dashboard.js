@@ -5,8 +5,15 @@ import { useEffect, useState } from 'react'
 import Typography from '@mui/material/Typography';
 import axios from "axios"
 import Grid from '@mui/material/Grid';
+import CustomPopup from "./SongPopup"
 
 const Dashboard = () => { 
+
+    const [visibility, setVisibility] = useState(false);
+
+    const popupCloseHandler = (e) => {
+        setVisibility(e);
+    };
 
     const [songs, setSongs] = useState([])
     const [search, setSearch] = useState('')
@@ -37,7 +44,7 @@ const Dashboard = () => {
                 })
                 .map(song => { 
                     return (
-                        <Grid item s={6} md ={4} lg ={3}>
+                        <Grid onClick={e => setVisibility(!visibility)} item s={6} md ={4} lg ={3}>
                             <Song 
                                 title = {song.title} 
                                 cover = {song.cover} 
@@ -48,6 +55,8 @@ const Dashboard = () => {
                     ) 
                 })}
             </Grid>
+            <CustomPopup onClose={popupCloseHandler} show={visibility}>
+        </CustomPopup>
         </div>
     )
 }

@@ -14,9 +14,7 @@ import { useTheme } from '@mui/material/styles';
 const Song = props => {
   const theme = useTheme();
   return (
-    <Card sx={{ display: 'flex', transition: '.5s', backgroundColor: '#d9d9d9', '&:hover': {
-        backgroundColor: '#f2f2f2',
-      }, width: 'fit-content', height: '150px', borderRadius: '5px' }}>
+    <Card className = 'Song'>
       <Box sx={{ display: 'flex', flexDirection: 'column', width: 180, }}>
         <CardContent sx={{ flex: '1 0 auto', overflow: 'scroll', height: '70px' }}>
           <Typography component="div" variant="h5">
