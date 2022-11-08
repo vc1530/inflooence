@@ -14,7 +14,7 @@ import Typography from '@mui/material/Typography';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { green, pink } from '@mui/material/colors';
 import Icon from '../images/icon.gif'
-import CustomPopup from "./Popup"
+import CustomPopup from "../components/Popup"
 
 function Copyright(props) {
   return (
