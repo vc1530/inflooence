@@ -8,10 +8,14 @@ sp = spotipy.Spotify(auth_manager=auth_manager)
 def search_sp(title, artist):
     results = sp.search(q='track:' + title + ' artist:'+artist, type='track', limit= 1, market= "US")
 
+
     # get id of song, artist name, song name
     # search_artist = results['tracks']['items'][0]['artists'][0]["name"]
     try:
         spotify_id = results['tracks']['items'][0]["id"]
+        track = sp.track(spotify_id)
+        # print(track['album']["images"][1]["url"])
+        url = track['album']["images"][1]["url"]
         features = sp.audio_features(spotify_id)
         # print(features[0]["acousticness"])
         ac = features[0]["acousticness"]
@@ -30,8 +34,10 @@ def search_sp(title, artist):
         loud = 0
         tempo = 0
         time = 0
+        url = "no_url"
 
-    return [spotify_id, ac, dc, en, live, loud, tempo, time]
+    return [spotify_id, ac, dc, en, live, loud, tempo, time, url]
     # print(search_artist,spotifyID,search_title)
     # id, acousticness, danceability,energy, liveness, loudness, tempo, time_signature
 
+# search_sp("love you so", "the king khan")

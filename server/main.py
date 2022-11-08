@@ -18,12 +18,11 @@ import sys
 import pprint
 
 browser_options = Options()
-browser_options.headless = True
+# browser_options.headless = True
 DRIVER_PATH = "../chromedriver"
 
 ######## SCRAPING #######
-
-
+#
 # driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()), options = browser_options)
 #
 # driver.get('http://webcache.googleusercontent.com/search?q=cache:https://tokboard.com/')
@@ -55,11 +54,11 @@ DRIVER_PATH = "../chromedriver"
 #
 # with file:
 #     # identifying header
-#     header = ['Title', 'Artist', 'ID', 'Acousticness', 'Danceability', 'Energy', 'Liveness', 'Loudness', 'Tempo', 'Time_signature']
+#     header = ['Title', 'Artist', 'ID', 'Acousticness', 'Danceability', 'Energy', 'Liveness', 'Loudness', 'Tempo', 'Time_signature', 'url']
 #     writer = csv.DictWriter(file, fieldnames = header)
-#     for title, artist, id, ac, dance, energy, liveness, loudness, tempo, time_signature in py_list:
-#         # id, acousticness, danceability,energy, liveness, loudness, tempo, time_signature
-#         writer.writerow({'Title': title, 'Artist': artist, "ID": id, "Acousticness": ac, "Danceability": dance, "Energy": energy, "Liveness": liveness, "Loudness": loudness, "Tempo": tempo, "Time_signature": time_signature})
+#     for title, artist, id, ac, dance, energy, liveness, loudness, tempo, time_signature, url in py_list:
+#         # id, acousticness, danceability,energy, liveness, loudness, tempo, time_signature, url
+#         writer.writerow({'Title': title, 'Artist': artist, "ID": id, "Acousticness": ac, "Danceability": dance, "Energy": energy, "Liveness": liveness, "Loudness": loudness, "Tempo": tempo, "Time_signature": time_signature, "url": url})
 
 ############## SCRAPING
 
@@ -89,12 +88,12 @@ try:
         cursor.execute('DROP TABLE IF EXISTS songs;')
         print('Creating table....')
         # id, acousticness, danceability,energy, liveness, loudness, tempo, time_signature
-        cursor.execute("CREATE TABLE songs (Title varchar(255) NOT NULL, Artist varchar(255) NOT NULL, ID varchar(255), Acousticness DECIMAL(10, 3), Danceability DECIMAL(10, 3), Energy DECIMAL(10, 6), Liveness DECIMAL(10, 6), Loudness DECIMAL(10, 6), Tempo DECIMAL(10, 6), Time_Signature DECIMAL(10, 6))")
+        cursor.execute("CREATE TABLE songs (Title varchar(255) NOT NULL, Artist varchar(255) NOT NULL, ID varchar(255), Acousticness DECIMAL(10, 3), Danceability DECIMAL(10, 3), Energy DECIMAL(10, 6), Liveness DECIMAL(10, 6), Loudness DECIMAL(10, 6), Tempo DECIMAL(10, 6), Time_Signature DECIMAL(10, 6) NOT NULL, Album_Art varchar(255) NOT NULL)")
 
         print("songs table is created....")
 
         for i,row in irisData.iterrows():
-            sql = "INSERT INTO songs VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"
+            sql = "INSERT INTO songs VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"
             cursor.execute(sql, tuple(row))
             print("Record inserted")
             # the connection is not autocommitted by default, so we
