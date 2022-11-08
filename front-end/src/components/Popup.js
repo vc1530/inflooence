@@ -15,7 +15,7 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import { green, pink } from '@mui/material/colors';
+import { purple, pink } from '@mui/material/colors';
 
 const theme = createTheme(
     {
@@ -24,7 +24,7 @@ const theme = createTheme(
             main: pink[500],
           },
           secondary: {
-            main: green[500],
+            main: purple[500],
           },
         },
         typography: {
