@@ -16,6 +16,7 @@ from spotipy.oauth2 import SpotifyClientCredentials
 import spotipy
 import sys
 import pprint
+import json
 
 
 class Song:
@@ -35,19 +36,9 @@ class Song:
 
     def display_info(self):
         print(self.title, self.artist, self.id, self.ac, self.dance, self.energy, self.liveness, self.loudness, self.tempo, self.time_signature, self.url)
-    # def set_data(title, artist, id, ac, dance, energy, liveness, loudness, tempo, time_signature, url):
-    # def set_data(self):
-    #     self.title = title
-    #     self.artist = artist
-    #     self.id = id
-    #     self.ac = ac
-    #     self.dance = dance
-    #     self.energy = energy
-    #     self.liveness = liveness
-    #     self.loudness = loudness
-    #     self.tempo = tempo
-    #     self.time_signature = time_signature
-    #     self.url = url
+
+    def toJson(self):
+        return json.dumps(self.all_info)
 
 
 browser_options = Options()
@@ -74,6 +65,7 @@ i = 1
 j = 0
 
 all_songs_obj = []
+list_allsongs_json = []
 
 while i < len(songs_list):
     new_song_parameters = [songs_list[i].get_text(), artist_list[j].get_text()]
@@ -81,6 +73,7 @@ while i < len(songs_list):
         new_song_parameters.append(element)
 
     song_obj_new = Song(new_song_parameters)
+    list_allsongs_json.append(song_obj_new.toJson())
 
     # debug tool: display each song object
     # song_obj_new.display_info()
@@ -92,7 +85,7 @@ while i < len(songs_list):
     j += 1
 
 # print(py_list)
-print(all_songs_obj)
+# print(all_songs_obj)
 # opening the csv file in 'w' mode
 file = open('../db.csv', 'w', newline ='')
 
@@ -115,6 +108,24 @@ try:
         print("inflooence database is created")
 except Error as e:
     print("Error while connecting to MySQL", e)
+
+# write JSON files to JSON text db
+
+with open("json_db.json", "w") as outfile:
+    outfile.write(json.dumps(list_allsongs_json))
+
+############## SCRAPING
+
+try:
+    conn = msql.connect(host='localhost', user='root',
+                        password='mysql123')
+    if conn.is_connected():
+        cursor = conn.cursor()
+        cursor.execute("CREATE DATABASE inflooencedb")
+        print("inflooence database is created")
+except Error as e:
+    print("Error while connecting to MySQL", e)
+
 
 irisData = pd.read_csv("../db.csv")
 irisData.head()
