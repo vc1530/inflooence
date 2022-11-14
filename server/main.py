@@ -17,48 +17,92 @@ import spotipy
 import sys
 import pprint
 
+
+class Song:
+    def __init__(self, all_info):
+        self.all_info = all_info
+        self.title = all_info[0]
+        self.artist = all_info[1]
+        self.id = all_info[2]
+        self.ac = all_info[3]
+        self.dance = all_info[4]
+        self.energy = all_info[5]
+        self.liveness = all_info[6]
+        self.loudness = all_info[7]
+        self.tempo = all_info[8]
+        self.time_signature = all_info[9]
+        self.url = all_info[10]
+
+    def display_info(self):
+        print(self.title, self.artist, self.id, self.ac, self.dance, self.energy, self.liveness, self.loudness, self.tempo, self.time_signature, self.url)
+    # def set_data(title, artist, id, ac, dance, energy, liveness, loudness, tempo, time_signature, url):
+    # def set_data(self):
+    #     self.title = title
+    #     self.artist = artist
+    #     self.id = id
+    #     self.ac = ac
+    #     self.dance = dance
+    #     self.energy = energy
+    #     self.liveness = liveness
+    #     self.loudness = loudness
+    #     self.tempo = tempo
+    #     self.time_signature = time_signature
+    #     self.url = url
+
+
 browser_options = Options()
-# browser_options.headless = True
+browser_options.headless = True
 DRIVER_PATH = "../chromedriver"
 
 ######## SCRAPING #######
-#
-# driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()), options = browser_options)
-#
-# driver.get('http://webcache.googleusercontent.com/search?q=cache:https://tokboard.com/')
-#
-# soup = BeautifulSoup(driver.page_source, "html.parser")
-# py_list = []
-# songs_list = soup.select('.title')
-#
-# artist_list = soup.select('.artist')
-#
-# # get ID of each song
-# sp = spotipy.Spotify(client_credentials_manager=SpotifyClientCredentials())
-#
-#
-# i = 1
-# j = 0
-#
-# while i < len(songs_list):
-#     add = [songs_list[i].get_text(), artist_list[j].get_text()]
-#     for element in search_sp(songs_list[i].get_text(), artist_list[j].get_text()):
-#         add.append(element)
-#     py_list.append(add)
-#     i += 1
-#     j += 1
+
+driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()), options = browser_options)
+
+driver.get('http://webcache.googleusercontent.com/search?q=cache:https://tokboard.com/')
+
+soup = BeautifulSoup(driver.page_source, "html.parser")
+py_list = []
+songs_list = soup.select('.title')
+
+artist_list = soup.select('.artist')
+
+# get ID of each song
+sp = spotipy.Spotify(client_credentials_manager=SpotifyClientCredentials())
+
+
+i = 1
+j = 0
+
+all_songs_obj = []
+
+while i < len(songs_list):
+    new_song_parameters = [songs_list[i].get_text(), artist_list[j].get_text()]
+    for element in search_sp(songs_list[i].get_text(), artist_list[j].get_text()):
+        new_song_parameters.append(element)
+
+    song_obj_new = Song(new_song_parameters)
+
+    # debug tool: display each song object
+    # song_obj_new.display_info()
+
+    # add new object to array of all song objects
+    all_songs_obj.append(song_obj_new)
+    py_list.append(new_song_parameters)
+    i += 1
+    j += 1
+
 # print(py_list)
-#
-# # opening the csv file in 'w' mode
-# file = open('../db.csv', 'w', newline ='')
-#
-# with file:
-#     # identifying header
-#     header = ['Title', 'Artist', 'ID', 'Acousticness', 'Danceability', 'Energy', 'Liveness', 'Loudness', 'Tempo', 'Time_signature', 'url']
-#     writer = csv.DictWriter(file, fieldnames = header)
-#     for title, artist, id, ac, dance, energy, liveness, loudness, tempo, time_signature, url in py_list:
-#         # id, acousticness, danceability,energy, liveness, loudness, tempo, time_signature, url
-#         writer.writerow({'Title': title, 'Artist': artist, "ID": id, "Acousticness": ac, "Danceability": dance, "Energy": energy, "Liveness": liveness, "Loudness": loudness, "Tempo": tempo, "Time_signature": time_signature, "url": url})
+print(all_songs_obj)
+# opening the csv file in 'w' mode
+file = open('../db.csv', 'w', newline ='')
+
+with file:
+    # identifying header
+    header = ['Title', 'Artist', 'ID', 'Acousticness', 'Danceability', 'Energy', 'Liveness', 'Loudness', 'Tempo', 'Time_signature', 'url']
+    writer = csv.DictWriter(file, fieldnames = header)
+    for title, artist, id, ac, dance, energy, liveness, loudness, tempo, time_signature, url in py_list:
+        # id, acousticness, danceability,energy, liveness, loudness, tempo, time_signature, url
+        writer.writerow({'Title': title, 'Artist': artist, "ID": id, "Acousticness": ac, "Danceability": dance, "Energy": energy, "Liveness": liveness, "Loudness": loudness, "Tempo": tempo, "Time_signature": time_signature, "url": url})
 
 ############## SCRAPING
 
