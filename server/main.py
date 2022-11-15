@@ -67,62 +67,62 @@ def shutdown_db_client():
 
 app.include_router(book_router, tags=["songs"], prefix="/song")
 
-#### MONGODB
+SPOTIPY_CLIENT_SECRET = "ba457fdecdc3453c87b7e5aaba0123fc"
+SPOTIPY_CLIENT_ID = "0048909068294db1b98e49ed9c7d5dc8"
+SPOTIPY_REDIRECT_URI = "http://localhost:8888/callback"
+
+
+# ------------ SCRAPING --------------------###
+
+driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()), options = browser_options)
+
+driver.get('http://webcache.googleusercontent.com/search?q=cache:https://tokboard.com/')
+
+soup = BeautifulSoup(driver.page_source, "html.parser")
+
+# initiate variables
+list_songs_arr = []
+songs_list = soup.select('.title')
+artist_list = soup.select('.artist')
+list_songs_obj = []
+
+
+# get spotify wrapper
+sp = spotipy.Spotify(client_credentials_manager=SpotifyClientCredentials())
+
+
+i = 1
+j = 0
 
 
 
+while i < len(songs_list):
+    params = [songs_list[i].get_text(), artist_list[j].get_text()]
+    for element in search_sp(songs_list[i].get_text(), artist_list[j].get_text()):
+        params.append(element)
 
-######## SCRAPING #######
-#
-# driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()), options = browser_options)
-#
-# driver.get('http://webcache.googleusercontent.com/search?q=cache:https://tokboard.com/')
-#
-# soup = BeautifulSoup(driver.page_source, "html.parser")
-#
-# # initiate variables
-# list_songs_arr = []
-# songs_list = soup.select('.title')
-# artist_list = soup.select('.artist')
-# list_songs_obj = []
-#
-#
-# # get spotify wrapper
-# sp = spotipy.Spotify(client_credentials_manager=SpotifyClientCredentials())
-#
-#
-# i = 1
-# j = 0
-#
-#
-#
-# while i < len(songs_list):
-#     params = [songs_list[i].get_text(), artist_list[j].get_text()]
-#     for element in search_sp(songs_list[i].get_text(), artist_list[j].get_text()):
-#         params.append(element)
-#
-#     new_song_obj = Song(params)
-#
-#     #### debug tool: display each song object
-#     # song_obj_new.display_info()
-#
-#     ### DEBUG
-#
-#     # add new object to array of all song objects
-#     list_songs_obj.append(new_song_obj)
-#     list_songs_arr.append(params)
-#     i += 1
-#     j += 1
-#
-# # write JSON files to JSON text db
-# outfile = open('json_db.json', 'w')
-# outfile.write(json.dumps([ob.__dict__ for ob in list_songs_obj]))
-# outfile.close()
+    new_song_obj = Song(params)
+
+    #### debug tool: display each song object
+    # song_obj_new.display_info()
+
+    ### DEBUG
+
+    # add new object to array of all song objects
+    list_songs_obj.append(new_song_obj)
+    list_songs_arr.append(params)
+    i += 1
+    j += 1
+
+# write JSON files to JSON text db
+outfile = open('json_db.json', 'w')
+outfile.write(json.dumps([ob.__dict__ for ob in list_songs_obj]))
+outfile.close()
 
 
-# SCRAPING ############### END
+# ------------ SCRAPING --------------- END
 
-############################################# MYSQL ################
+# ---------------- MYSQL ----------------------###
 #
 # # opening the csv file in 'w' mode
 # file = open('../db.csv', 'w', newline ='')
@@ -186,15 +186,19 @@ app.include_router(book_router, tags=["songs"], prefix="/song")
 #             conn.commit()
 # except Error as e:
 #     print("Error while connecting to MySQL", e)
+# # Execute query
+# sql = "SELECT * FROM inflooencedb.songs"
+# cursor.execute(sql)
+# # Fetch all the records
+# result = cursor.fetchall()
+# show SQL table
+# for i in result:
+#     print(i)
 
-### MYSQL ############################ END
+# -------- MYSQL ------ END
 
 
-
-
-
-
-################################# MONGODB ##################
+# ----------------------------- MONGODB ----------------------###
 myclient = pymongo.MongoClient("mongodb+srv://INFLOOENCE:INFLOOENCE@inflooence.wode3u7.mongodb.net/test")
 db = myclient["pymongo_tutorial"]
 collection = db["songs"]
@@ -210,19 +214,9 @@ if isinstance(file_data, list):
 else:
     collection.insert_one(file_data)
 
+# --------- MONGODB ----------------- END
 
-######## MONGODB ################## END
-
-# # Execute query
-# sql = "SELECT * FROM inflooencedb.songs"
-# cursor.execute(sql)
-# # Fetch all the records
-# result = cursor.fetchall()
-# show SQL table
-# for i in result:
-#     print(i)
-
-
+print("python script finished")
 # driver.quit()
 
 
