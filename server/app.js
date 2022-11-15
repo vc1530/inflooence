@@ -1,21 +1,19 @@
-//var client_id = '0048909068294db1b98e49ed9c7d5dc8'; // Your client id
-//var client_secret = 'ba457fdecdc3453c87b7e5aaba0123fc'; // Your secret
-//var redirect_uri = 'http://localhost:8888/callback'; // Your redirect uri
-//var scopes = \'user-read-private user-read-email\'
-import spotipy
-from spotipy.oauth2 import SpotifyClientCredentials
 
-birdy_uri = 'spotify:artist:2WX2uTcsvV5OnS0inACecP'
-spotify = spotipy.Spotify(client_credentials_manager=SpotifyClientCredentials())
+// import express JS module into app
+// and creates its variable.
+var express = require('express');
+var app = express();
 
-results = spotify.artist_albums(birdy_uri, album_type='album')
-albums = results['items']
-while results['next']:
-    results = spotify.next(results)
-    albums.extend(results['items'])
+// Creates a server which runs on port 3000 and
+// can be accessed through localhost:3000
+app.listen(8888, function() {
+    console.log('server running on port 8888');
+} )
 
-for album in albums:
-    print(album['name'])
+const { spawn } = require('node:child_process');
+const childPython = spawn('python3', ['main.py']);
 
-
+childPython.stdout.on('data', (data) => {
+  console.log(`stdout: ${data}`);
+});
 
