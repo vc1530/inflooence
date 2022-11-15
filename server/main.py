@@ -23,8 +23,15 @@ import pymongo
 from pymongo import MongoClient, InsertOne
 from fastapi import FastAPI
 from dotenv import dotenv_values
-# from pymongo import MongoClient
 from routes import router as book_router
+# from dotenv import load_dotenv
+# load_dotenv()
+# import os
+
+# SPOTIPY_CLIENT_SECRET = os.getenv("SPOTIPY_CLIENT_SECRET")
+# SPOTIPY_CLIENT_ID = os.getenv("SPOTIPY_CLIENT_ID")
+# SPOTIPY_REDIRECT_URI = os.getenv("SPOTIPY_REDIRECT_URI")
+#install pymongo, spotipy, fastapi, pythonshell in terminal
 
 class Song:
     def __init__(self, all_info):
