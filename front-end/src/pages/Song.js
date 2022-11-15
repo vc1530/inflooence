@@ -4,6 +4,9 @@ import {useParams} from 'react-router-dom'
 import BarGraph from '../components/BarGraph' 
 import axios from 'axios' 
 import Grid from '@mui/material/Grid';
+import db from '../data/db.csv'
+import Papa from 'papaparse'
+import no_url from '../images/no_url.png'
 
 const Song = (props) => { 
 
@@ -13,37 +16,35 @@ const Song = (props) => {
     let params = useParams();
 
     useEffect(()=> { 
-        axios.get('https://my.api.mockaroo.com/songs.json?key=60fe9c50')
-        .then (res => { 
-            console.log(props)
-            setSong(res.data.find(song => {
-                if (song.id == params.id) return song 
-                return '' 
-            })) 
-        }) 
-        .catch(err => { 
-            console.log(err) 
-        })
+        Papa.parse(db, {
+            download: true, 
+            skipEmptyLines: true,
+            complete: function (results) {
+            setSong(results.data.find((song, i) => i+1 == params.id))  
+        }});
         if (search !== '') window.location.replace('/dashboard')
-    }, [search, params.id])
+    }, [search])
+
+    console.log(song) 
 
     return ( 
         <div> 
             <Header setSearch={setSearch} /> 
             <Grid container spacing = {4} justifyContent='center' padding='20px' > 
                 <Grid item xs={6}> 
-                    <img src={song.cover} /> 
-                    <h1>{song.title}</h1>
-                    <h2>{song.first_name} {song.last_name}</h2>
+                    <img src={song[10] == "no_url" ? no_url : song[10]} /> 
+                    <h1>{song[0]}</h1>
+                    <h2>{song[1]}</h2>
                 </Grid>
                 <Grid item xs={6}>
                     <BarGraph 
-                        title={song.title} 
-                        acousticness={song.acousticness} 
-                        energy={song.energy} 
-                        liveness={song.liveness} 
-                        loudness={song.loudness} 
-                        tempo={song.tempo} 
+                        title={song[0]} 
+                        
+                        acousticness={+song[3]} 
+                        energy={+song[4]} 
+                        liveness={+song[5]} 
+                        loudness={+song[6]} 
+                        tempo={0.1} 
                     /> 
                 </Grid>
             </Grid>

@@ -16,6 +16,8 @@ import AccountCircle from '@mui/icons-material/AccountCircle';
 import MailIcon from '@mui/icons-material/Mail';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import MoreIcon from '@mui/icons-material/MoreVert';
+import {Link} from 'react-router-dom'
+import './Header.css' 
 
 const Search = styled('div')(({ theme }) => ({
   position: 'relative',
@@ -178,7 +180,11 @@ export default function PrimarySearchAppBar(props) {
             component="div"
             sx={{ display: { xs: 'none', sm: 'block' } }}
           >
-            <Box sx={{fontSize: '24px'}}> Inflooence </Box> 
+            <Box sx={{fontSize: '24px'}}> 
+              <Link className='dashboard-logo' to="/dashboard"> 
+                Inflooence 
+              </Link> 
+            </Box> 
           </Typography>
           <Search>
             <SearchIconWrapper>
