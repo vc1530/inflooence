@@ -23,7 +23,7 @@ childPython.stdout.on('data', (data) => {
 const mongoose = require("mongoose");
 //configure mongoose
 mongoose.connect(
-  "mongodb+srv://INFLOOENCE:INFLOOENCE@inflooence.wode3u7.mongodb.net/pymongo_tutorial",
+  "mongodb+srv://INFLOOENCE:INFLOOENCE@inflooence.wode3u7.mongodb.net/inflooence?retryWrites=true&w=majority",
   {
     useNewUrlParser: true,
     useUnifiedTopology: true,
@@ -41,12 +41,14 @@ mongoose.connect(
 app.use(morgan('dev'))
 app.use(express.static('public')) 
 
-const songRouter = require("./routes");
+// const songRouter = require("./routes");
 // app.use("/api/songs", songRouter);
 
-app.get('/add', (req, res)=>{
+
+
+app.get('/add_test_song', (req, res)=>{
   const song = new Song({
-    title: "String",
+    title: "testing",
     artist: "String",
     spotify_id: "String",
     acousticness: "String",
@@ -66,6 +68,19 @@ app.get('/add', (req, res)=>{
       .catch((err) => {
         console.log(err)
     })
+})
+
+// getter
+app.get('/allsongs', (req,res)=>{
+  Song.find()
+  .then((result)=>{
+    res.send(result);
+  })
+  .catch((err) =>{
+    console.log(err)
+  })
+
+
 })
 
 module.exports = app;

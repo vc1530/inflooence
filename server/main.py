@@ -27,9 +27,7 @@ from routes import router as book_router
 # load_dotenv()
 # import os
 
-# SPOTIPY_CLIENT_SECRET = os.getenv("SPOTIPY_CLIENT_SECRET")
-# SPOTIPY_CLIENT_ID = os.getenv("SPOTIPY_CLIENT_ID")
-# SPOTIPY_REDIRECT_URI = os.getenv("SPOTIPY_REDIRECT_URI")
+
 #install pymongo, spotipy, fastapi, pythonshell, bs4, webdriver-manager, seleniumin terminal
 
 class Song:
@@ -80,147 +78,147 @@ def shutdown_db_client():
 
 # # ------------ SCRAPING --------------------###
 
-driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()), options = browser_options)
+# driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()), options = browser_options)
 
-driver.get('http://webcache.googleusercontent.com/search?q=cache:https://tokboard.com/')
+# driver.get('http://webcache.googleusercontent.com/search?q=cache:https://tokboard.com/')
 
-soup = BeautifulSoup(driver.page_source, "html.parser")
+# soup = BeautifulSoup(driver.page_source, "html.parser")
 
-# initiate variables
-list_songs_arr = []
-songs_list = soup.select('.title')
-artist_list = soup.select('.artist')
-list_songs_obj = []
-
-
-# get spotify wrapper
-sp = spotipy.Spotify(client_credentials_manager=SpotifyClientCredentials())
+# # initiate variables
+# list_songs_arr = []
+# songs_list = soup.select('.title')
+# artist_list = soup.select('.artist')
+# list_songs_obj = []
 
 
-i = 1
-j = 0
+# # get spotify wrapper
+# sp = spotipy.Spotify(client_credentials_manager=SpotifyClientCredentials())
+
+
+# i = 1
+# j = 0
 
 
 
-while i < len(songs_list):
-    params = [songs_list[i].get_text(), artist_list[j].get_text()]
-    for element in search_sp(songs_list[i].get_text(), artist_list[j].get_text()):
-        params.append(element)
+# while i < len(songs_list):
+#     params = [songs_list[i].get_text(), artist_list[j].get_text()]
+#     for element in search_sp(songs_list[i].get_text(), artist_list[j].get_text()):
+#         params.append(element)
 
-    new_song_obj = Song(params)
+#     new_song_obj = Song(params)
 
-    #### debug tool: display each song object
-    # song_obj_new.display_info()
+#     #### debug tool: display each song object
+#     # song_obj_new.display_info()
 
-    ### DEBUG
+#     ### DEBUG
 
-    # add new object to array of all song objects
-    list_songs_obj.append(new_song_obj)
-    list_songs_arr.append(params)
-    i += 1
-    j += 1
+#     # add new object to array of all song objects
+#     list_songs_obj.append(new_song_obj)
+#     list_songs_arr.append(params)
+#     i += 1
+#     j += 1
 
-# write JSON files to JSON text db
-outfile = open('json_db.json', 'w')
-outfile.write(json.dumps([ob.__dict__ for ob in list_songs_obj]))
-outfile.close()
-
-
-# ------------ SCRAPING --------------- END
-
-# ---------------- MYSQL ----------------------###
-#
-# # opening the csv file in 'w' mode
-# file = open('../db.csv', 'w', newline ='')
-#
-# with file:
-#     # identifying header
-#     header = ['Title', 'Artist', 'ID', 'Acousticness', 'Danceability', 'Energy', 'Liveness', 'Loudness', 'Tempo', 'Time_signature', 'url']
-#     writer = csv.DictWriter(file, fieldnames = header)
-#     for title, artist, id, ac, dance, energy, liveness, loudness, tempo, time_signature, url in list_songs_arr:
-#         # id, acousticness, danceability,energy, liveness, loudness, tempo, time_signature, url
-#         writer.writerow({'Title': title, 'Artist': artist, "ID": id, "Acousticness": ac, "Danceability": dance, "Energy": energy, "Liveness": liveness, "Loudness": loudness, "Tempo": tempo, "Time_signature": time_signature, "url": url})
-#
-#
-# try:
-#     conn = msql.connect(host='localhost', user='root',
-#                         password='mysql123')
-#     if conn.is_connected():
-#         cursor = conn.cursor()
-#         cursor.execute("CREATE DATABASE inflooencedb")
-#         print("inflooence database is created")
-# except Error as e:
-#     print("Error while connecting to MySQL", e)
-
-# try:
-#     conn = msql.connect(host='localhost', user='root',
-#                         password='mysql123')
-#     if conn.is_connected():
-#         cursor = conn.cursor()
-#         cursor.execute("CREATE DATABASE inflooencedb")
-#         print("inflooence database is created")
-# except Error as e:
-#     print("Error while connecting to MySQL", e)
-#
-#
-# irisData = pd.read_csv("../db.csv")
-# irisData.head()
-# cursor = None
-#
-# try:
-#     conn = msql.connect(host='localhost',
-#                            database='inflooencedb', user='root',
-#                            password='mysql123')
-#     if conn.is_connected():
-#         cursor = conn.cursor()
-#         cursor.execute("select database();")
-#         record = cursor.fetchone()
-#         print("You're connected to database: ", record)
-#         cursor.execute('DROP TABLE IF EXISTS songs;')
-#         print('Creating table....')
-#         # id, acousticness, danceability,energy, liveness, loudness, tempo, time_signature
-#         cursor.execute("CREATE TABLE songs (Title varchar(255) NOT NULL, Artist varchar(255) NOT NULL, ID varchar(255), Acousticness DECIMAL(10, 3), Danceability DECIMAL(10, 3), Energy DECIMAL(10, 6), Liveness DECIMAL(10, 6), Loudness DECIMAL(10, 6), Tempo DECIMAL(10, 6), Time_Signature DECIMAL(10, 6) NOT NULL, Album_Art varchar(255) NOT NULL)")
-#
-#         print("songs table is created....")
-#
-#         for i,row in irisData.iterrows():
-#             sql = "INSERT INTO songs VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"
-#             cursor.execute(sql, tuple(row))
-#             print("Record inserted")
-#             # the connection is not autocommitted by default, so we
-#             # must commit to save our changes
-#             conn.commit()
-# except Error as e:
-#     print("Error while connecting to MySQL", e)
-# # Execute query
-# sql = "SELECT * FROM inflooencedb.songs"
-# cursor.execute(sql)
-# # Fetch all the records
-# result = cursor.fetchall()
-# show SQL table
-# for i in result:
-#     print(i)
-
-# -------- MYSQL ------ END
+# # write JSON files to JSON text db
+# outfile = open('json_db.json', 'w')
+# outfile.write(json.dumps([ob.__dict__ for ob in list_songs_obj]))
+# outfile.close()
 
 
-# ----------------------------- MONGODB ----------------------###
-myclient = pymongo.MongoClient("mongodb+srv://INFLOOENCE:INFLOOENCE@inflooence.wode3u7.mongodb.net/?retryWrites=true&w=majority")
-db = myclient["inflooence"]
-collection = db["songs"]
-# open file
-with open('json_db.json') as file:
-    file_data = json.load(file)
+# # ------------ SCRAPING --------------- END
 
-# Inserting the loaded data in the Collection
-# if JSON contains data more than one entry
-# insert_many is used else insert_one is used
-if isinstance(file_data, list):
-    collection.insert_many(file_data)
-else:
-    collection.insert_one(file_data)
+# # ---------------- MYSQL ----------------------###
+# #
+# # # opening the csv file in 'w' mode
+# # file = open('../db.csv', 'w', newline ='')
+# #
+# # with file:
+# #     # identifying header
+# #     header = ['Title', 'Artist', 'ID', 'Acousticness', 'Danceability', 'Energy', 'Liveness', 'Loudness', 'Tempo', 'Time_signature', 'url']
+# #     writer = csv.DictWriter(file, fieldnames = header)
+# #     for title, artist, id, ac, dance, energy, liveness, loudness, tempo, time_signature, url in list_songs_arr:
+# #         # id, acousticness, danceability,energy, liveness, loudness, tempo, time_signature, url
+# #         writer.writerow({'Title': title, 'Artist': artist, "ID": id, "Acousticness": ac, "Danceability": dance, "Energy": energy, "Liveness": liveness, "Loudness": loudness, "Tempo": tempo, "Time_signature": time_signature, "url": url})
+# #
+# #
+# # try:
+# #     conn = msql.connect(host='localhost', user='root',
+# #                         password='mysql123')
+# #     if conn.is_connected():
+# #         cursor = conn.cursor()
+# #         cursor.execute("CREATE DATABASE inflooencedb")
+# #         print("inflooence database is created")
+# # except Error as e:
+# #     print("Error while connecting to MySQL", e)
 
-# --------- MONGODB ----------------- END
+# # try:
+# #     conn = msql.connect(host='localhost', user='root',
+# #                         password='mysql123')
+# #     if conn.is_connected():
+# #         cursor = conn.cursor()
+# #         cursor.execute("CREATE DATABASE inflooencedb")
+# #         print("inflooence database is created")
+# # except Error as e:
+# #     print("Error while connecting to MySQL", e)
+# #
+# #
+# # irisData = pd.read_csv("../db.csv")
+# # irisData.head()
+# # cursor = None
+# #
+# # try:
+# #     conn = msql.connect(host='localhost',
+# #                            database='inflooencedb', user='root',
+# #                            password='mysql123')
+# #     if conn.is_connected():
+# #         cursor = conn.cursor()
+# #         cursor.execute("select database();")
+# #         record = cursor.fetchone()
+# #         print("You're connected to database: ", record)
+# #         cursor.execute('DROP TABLE IF EXISTS songs;')
+# #         print('Creating table....')
+# #         # id, acousticness, danceability,energy, liveness, loudness, tempo, time_signature
+# #         cursor.execute("CREATE TABLE songs (Title varchar(255) NOT NULL, Artist varchar(255) NOT NULL, ID varchar(255), Acousticness DECIMAL(10, 3), Danceability DECIMAL(10, 3), Energy DECIMAL(10, 6), Liveness DECIMAL(10, 6), Loudness DECIMAL(10, 6), Tempo DECIMAL(10, 6), Time_Signature DECIMAL(10, 6) NOT NULL, Album_Art varchar(255) NOT NULL)")
+# #
+# #         print("songs table is created....")
+# #
+# #         for i,row in irisData.iterrows():
+# #             sql = "INSERT INTO songs VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"
+# #             cursor.execute(sql, tuple(row))
+# #             print("Record inserted")
+# #             # the connection is not autocommitted by default, so we
+# #             # must commit to save our changes
+# #             conn.commit()
+# # except Error as e:
+# #     print("Error while connecting to MySQL", e)
+# # # Execute query
+# # sql = "SELECT * FROM inflooencedb.songs"
+# # cursor.execute(sql)
+# # # Fetch all the records
+# # result = cursor.fetchall()
+# # show SQL table
+# # for i in result:
+# #     print(i)
+
+# # -------- MYSQL ------ END
+
+
+# # ----------------------------- MONGODB ----------------------###
+# myclient = pymongo.MongoClient("mongodb+srv://INFLOOENCE:INFLOOENCE@inflooence.wode3u7.mongodb.net/?retryWrites=true&w=majority")
+# db = myclient["inflooence"]
+# collection = db["songs"]
+# # open file
+# with open('json_db.json') as file:
+#     file_data = json.load(file)
+
+# # Inserting the loaded data in the Collection
+# # if JSON contains data more than one entry
+# # insert_many is used else insert_one is used
+# if isinstance(file_data, list):
+#     collection.insert_many(file_data)
+# else:
+#     collection.insert_one(file_data)
+
+# # --------- MONGODB ----------------- END
 
 print("python script finished")
 # driver.quit()
