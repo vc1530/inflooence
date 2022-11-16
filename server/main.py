@@ -2,7 +2,6 @@
 
 from pickletools import pylist
 
-import pymongo as pymongo
 from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
 from webdriver_manager.chrome import ChromeDriverManager
@@ -23,8 +22,15 @@ import pymongo
 from pymongo import MongoClient, InsertOne
 from fastapi import FastAPI
 from dotenv import dotenv_values
-# from pymongo import MongoClient
 from routes import router as book_router
+# from dotenv import load_dotenv
+# load_dotenv()
+# import os
+
+# SPOTIPY_CLIENT_SECRET = os.getenv("SPOTIPY_CLIENT_SECRET")
+# SPOTIPY_CLIENT_ID = os.getenv("SPOTIPY_CLIENT_ID")
+# SPOTIPY_REDIRECT_URI = os.getenv("SPOTIPY_REDIRECT_URI")
+#install pymongo, spotipy, fastapi, pythonshell, bs4, webdriver-manager, seleniumin terminal
 
 class Song:
     def __init__(self, all_info):
@@ -65,14 +71,14 @@ def startup_db_client():
 def shutdown_db_client():
     app.mongodb_client.close()
 
-app.include_router(book_router, tags=["songs"], prefix="/song")
+# app.include_router(book_router, tags=["songs"], prefix="/song")
 
-SPOTIPY_CLIENT_SECRET = "ba457fdecdc3453c87b7e5aaba0123fc"
-SPOTIPY_CLIENT_ID = "0048909068294db1b98e49ed9c7d5dc8"
-SPOTIPY_REDIRECT_URI = "http://localhost:8888/callback"
+# SPOTIPY_CLIENT_SECRET = "ba457fdecdc3453c87b7e5aaba0123fc"
+# SPOTIPY_CLIENT_ID = "0048909068294db1b98e49ed9c7d5dc8"
+# SPOTIPY_REDIRECT_URI = "http://localhost:8888/callback"
 
 
-# ------------ SCRAPING --------------------###
+# # ------------ SCRAPING --------------------###
 
 driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()), options = browser_options)
 
@@ -199,8 +205,8 @@ outfile.close()
 
 
 # ----------------------------- MONGODB ----------------------###
-myclient = pymongo.MongoClient("mongodb+srv://INFLOOENCE:INFLOOENCE@inflooence.wode3u7.mongodb.net/test")
-db = myclient["pymongo_tutorial"]
+myclient = pymongo.MongoClient("mongodb+srv://INFLOOENCE:INFLOOENCE@inflooence.wode3u7.mongodb.net/?retryWrites=true&w=majority")
+db = myclient["inflooence"]
 collection = db["songs"]
 
 with open('json_db.json') as file:
