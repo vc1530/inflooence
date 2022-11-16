@@ -208,7 +208,7 @@ outfile.close()
 myclient = pymongo.MongoClient("mongodb+srv://INFLOOENCE:INFLOOENCE@inflooence.wode3u7.mongodb.net/?retryWrites=true&w=majority")
 db = myclient["inflooence"]
 collection = db["songs"]
-
+# open file
 with open('json_db.json') as file:
     file_data = json.load(file)
 
