@@ -10,8 +10,16 @@ import Papa from 'papaparse'
 import db from '../data/db.csv'
 import top250 from '../data/top-250-tiktokers.csv'
 import UserCard from '../components/UserCard' 
+import jwt_decode from "jwt-decode"
 
 const Dashboard = (props) => { 
+
+    const token = localStorage.getItem("token") 
+
+    useEffect(() => { 
+        const user = jwt_decode(token)
+        console.log(user) 
+    })
 
     const [songs, setSongs] = useState([])
     const [tiktokers, setTiktokers] = useState([]) 
