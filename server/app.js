@@ -4,6 +4,10 @@ const express = require('express');
 const app = express();
 const morgan = require('morgan');
 const Song = require('./songModel.js')
+var cors = require('cors')
+
+// enable cors
+app.use(cors())
 
 // Creates a server which runs on port 3000 and
 // can be accessed through localhost:3000
