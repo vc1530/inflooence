@@ -9,7 +9,7 @@ import { green, pink } from '@mui/material/colors';
 import axios from "axios"
 import { useEffect, useState } from 'react'
 import Papa from 'papaparse'
-import Test from './pages/Test'
+// import Test from './pages/Test'
 
 const theme = createTheme(
   {
@@ -47,7 +47,7 @@ function App() {
 
   return (
     <div className="App">
-      {/* <ThemeProvider theme={theme}>
+      <ThemeProvider theme={theme}>
         <Router>
           <main className="App-main">
             <Routes>
@@ -55,15 +55,15 @@ function App() {
               <Route path="/dashboard" element={<Dashboard />} /> 
               <Route path="/profile" element={<Profile />} /> 
               <Route path="/:id" element={<Song />} /> 
-              <Route path="/test" element={<Test />} /> 
+              {/* <Route path="/test" element={<Test />} />  */}
 
             </Routes> 
           </main>
         </Router>
-      </ThemeProvider> */}
-      <div ClassName="test">
+      </ThemeProvider>
+      {/* <div ClassName="test">
         <Test/>
-      </div>
+      </div> */}
 
     </div>
 

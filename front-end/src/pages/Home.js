@@ -68,21 +68,43 @@ export default function Home() {
         email: data.get('email'), 
         password: data.get('password'), 
       }
-      const response = await axios.post(
-        `http://localhost:8888/login`, 
+      console.log(process.env)
+      const res = await axios.post(
+        `${process.env.REACT_APP_BACKEND}/login`, 
         formData
       )
-      console.log(response) 
+      localStorage.setItem("token", res.data.token)
+      console.log(res) 
+      const token = localStorage.getItem("token") 
+      const response = await axios.get(
+        `${process.env.REACT_APP_BACKEND}/user`, 
+        { 
+          headers: { Authorization: `JWT ${token}` },
+        }
+      )
+      console.log(response.data.user) 
     } catch (err) { 
       console.log("error!") 
     }
   } 
 
-  const handleResponse = (res) => { 
+  const handleResponse = async (res) => { 
     console.log(res.credential) 
     localStorage.setItem("token", res.credential)
-    const user = jwt_decode(res.credential)
-    console.log(user) 
+    //const user = jwt_decode(res.credential)
+    //console.log(user) 
+    //localStorage.setItem("token", res.data.token)
+    //console.log(res) 
+    const token = localStorage.getItem("token") 
+    const response = await axios.get(
+      `${process.env.REACT_APP_BACKEND}/user`, 
+      { 
+        headers: { 
+          Authorization: `JWT ${token}`, 
+        },
+      }
+    )
+      console.log(response.data.user) 
   }
 
   useEffect (() => { 
@@ -96,6 +118,8 @@ export default function Home() {
       document.getElementById("signInDiv"), 
       {theme: "outline", size: "large"}
     )
+
+    google.accounts.id.prompt()
   }, [])
 
   return (

@@ -4,23 +4,14 @@ const express = require('express');
 const app = express();
 const morgan = require('morgan');
 const Song = require('./songModel.js')
-<<<<<<< HEAD
-var cors = require('cors')
+const cors = require('cors')
 
 // enable cors
 app.use(cors())
-=======
 const path = require('path') 
 require("dotenv").config({ path: 'server/.env' }) 
 //require("dotenv").config({ silent: true })
 const jwt = require("jsonwebtoken")
-const passport = require("passport")
-app.use(passport.initialize())
-
-const { jwtOptions, jwtStrategy } = require("./jwt-config.js") 
-passport.use(jwtStrategy)
->>>>>>> 96e8e0d (login)
-
 // Creates a server which runs on port 3000 and
 // can be accessed through localhost:3000
 app.listen(8888, function() {
@@ -34,7 +25,6 @@ const childPython = spawn('python3', ['main.py']);
 childPython.stdout.on('data', (data) => {
   console.log(`stdout: ${data}`);
 });
-
 
 const mongoose = require("mongoose");
 //configure mongoose
@@ -59,7 +49,6 @@ app.use(express.static('public'))
 
 // const songRouter = require("./routes");
 // app.use("/api/songs", songRouter);
-
 
 
 app.get('/add_test_song', (req, res)=>{
@@ -87,14 +76,21 @@ app.get('/add_test_song', (req, res)=>{
 })
 
 // getter
-app.get('/allsongs', (req,res)=>{
-  Song.find()
-  .then((result)=>{
-    res.send(result);
+app.get('/allsongs', async (req,res)=>{
+  console.log("hello")
+ try { 
+  const songs = await Song.find({}) 
+  res.json({ 
+    success: true, 
+    songs: songs, 
   })
-  .catch((err) =>{
-    console.log(err)
+ } catch (err) { 
+  console.error(err) 
+  res.status(400).json({ 
+    success: false, 
+    error: err, 
   })
+ }
 })
 
 const Users = [ 
@@ -106,10 +102,61 @@ const Users = [
 ]
 
 app.post('/login', (req, res) => { 
-  console.log(req);
+  console.log(req.body);
+  const user = Users.find(user => 
+    user.email == req.body.email && user.password == req.body.password
+  )
+  const token = jwt.sign({id: user.id}, jwtOptions.secretOrKey) 
   res.json({ 
-    name: "hello"
+    success: true, 
+    token: token, 
+    id: user.id, 
   })
 })
+
+app.get('/auth/google/success', (req, res) => { 
+  res.json({ 
+    success: true, 
+    user : req.user, 
+  })
+})
+
+app.get('auth/google/failure', (req, res) => { 
+  res.json({ 
+    success: false, 
+    message: 'didnt work', 
+  })
+})
+
+const passport = require("passport")
+app.use(passport.initialize())
+
+const { jwtOptions, jwtStrategy } = require("./jwt-config.js") 
+passport.use(jwtStrategy)
+
+const passport_use = passport.authenticate('jwt', { session: false }) 
+app.use(passport_use)
+
+require('./google-strategy.js') 
+const passport_google = passport.authenticate( 'google', {
+  successRedirect: '/auth/google/success',
+  failureRedirect: '/auth/google/failure', 
+  session: false, 
+})
+app.use(passport_google) 
+
+app.get('/user', (req, res) => { 
+  console.log(req.user) 
+  res.json({ 
+    success: true, 
+    user: req.user, 
+  })
+})
+
+app.get('/oauth2/redirect/google',
+  passport.authenticate('google', { failureRedirect: '/login', failureMessage: true }),
+  function(req, res) {
+    res.redirect('/');
+  });
 
 module.exports = app;

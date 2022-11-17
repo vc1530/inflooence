@@ -17,6 +17,7 @@
     "mkdirp": "^1.0.4",
     "mongodb": "^4.11.0",
     "mongoose": "^6.7.2",
+    "passport-google-oauth2": "^0.2.0",
     "querystring": "~0.2.0",
     "request": "~2.83.0"
   },

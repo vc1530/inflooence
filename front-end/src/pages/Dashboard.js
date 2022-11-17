@@ -16,34 +16,40 @@ const Dashboard = (props) => {
 
     const token = localStorage.getItem("token") 
 
-    useEffect(() => { 
-        const user = jwt_decode(token)
-        console.log(user) 
-    })
-
     const [songs, setSongs] = useState([])
     const [tiktokers, setTiktokers] = useState([]) 
     const [search, setSearch] = useState('')
 
     useEffect(() => { 
-        Papa.parse(db, {
-            download: true, 
-            skipEmptyLines: true,
-            complete: function (results) {
-            console.log(results.data) 
-            setSongs(results.data)
-            },
-        });
-        Papa.parse(top250, {
-            download: true, 
-            skipEmptyLines: true,
-            complete: function (results) {
-            console.log(results.data.shift()) 
-            setTiktokers(results.data)
-            console.log(tiktokers) 
-            },
-        });
+        const user = jwt_decode(token)
+        console.log(user) 
+        axios.get(`${process.env.REACT_APP_BACKEND}/allsongs`) 
+        .then(res =>{ 
+            console.log(res.data.songs) 
+            setSongs(res.data.songs) 
+        })
+        .catch(err => console.log(err))
     }, [])
+
+    // useEffect(() => { 
+    //     Papa.parse(db, {
+    //         download: true, 
+    //         skipEmptyLines: true,
+    //         complete: function (results) {
+    //         console.log(results.data) 
+    //         setSongs(results.data)
+    //         },
+    //     });
+    //     Papa.parse(top250, {
+    //         download: true, 
+    //         skipEmptyLines: true,
+    //         complete: function (results) {
+    //         console.log(results.data.shift()) 
+    //         setTiktokers(results.data)
+    //         console.log(tiktokers) 
+    //         },
+    //     });
+    // }, [])
 
 
     return ( 
@@ -58,16 +64,16 @@ const Dashboard = (props) => {
                         {songs
                         .filter(song => { 
                             if (song === []) return song; 
-                            else if (song[0].toLowerCase().includes(search.toLowerCase())) return song; 
+                            else if (song.title.toLowerCase().includes(search.toLowerCase())) return song; 
                             return ''; 
                         })
                         .map((song, i) => { 
                             return (
                                 <Grid md ={6}>
                                     <SongCard 
-                                        title = {song[0]} 
-                                        cover = {song[10]} 
-                                        artist = {song[1]} 
+                                        title = {song.title} 
+                                        cover = {song.url} 
+                                        artist = {song.artist} 
                                         id = {i + 1} 
                                     />
                                 </Grid> 
