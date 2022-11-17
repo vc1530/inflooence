@@ -1,30 +1,31 @@
-import React from 'react';
-import axios from 'axios';
+// import React from 'react';
+// import axios from 'axios';
+// import {useState} from 'react'; 
 
-export default class Test extends React.Component {
-    state = {
-      songs: []
-    }
+// const Test = () => {
+//     const [songs, setSongs] = useState([]) 
   
-    componentDidMount() {
-      axios.get(`http://localhost/8888/getAllSongs`)
-        .then(res => {
-          const songs = res.data;
-          this.setState({ songs });
-        })
-    }
+//     // componentDidMount() {
+//       // axios.get(`http://localhost/8888/getAllSongs`)
+//       //   .then(res => {
+//       //     const songs = res.data;
+//       //     this.setState({ songs });
+//       //   })
+//     // }
   
-    render() {
-      return (
-        <ul>
-          {
-            this.state.songs
-              .map(song =>
-                <li key={song.id}>{song.title}</li>
-              )
-          }
-          haha
-        </ul>
-      )
-    }
-  }
+//     // render() {
+//       // return (
+//       //   <ul>
+//       //     {
+//       //       this.state.songs
+//       //         .map(song =>
+//       //           <li key={song.id}>{song.title}</li>
+//       //         )
+//       //     }
+//       //     haha
+//       //   </ul>
+//       // )
+//     // }
+//   }
+
+//   export default Test 
