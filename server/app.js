@@ -4,10 +4,22 @@ const express = require('express');
 const app = express();
 const morgan = require('morgan');
 const Song = require('./songModel.js')
+<<<<<<< HEAD
 var cors = require('cors')
 
 // enable cors
 app.use(cors())
+=======
+const path = require('path') 
+require("dotenv").config({ path: 'server/.env' }) 
+//require("dotenv").config({ silent: true })
+const jwt = require("jsonwebtoken")
+const passport = require("passport")
+app.use(passport.initialize())
+
+const { jwtOptions, jwtStrategy } = require("./jwt-config.js") 
+passport.use(jwtStrategy)
+>>>>>>> 96e8e0d (login)
 
 // Creates a server which runs on port 3000 and
 // can be accessed through localhost:3000
@@ -83,8 +95,21 @@ app.get('/allsongs', (req,res)=>{
   .catch((err) =>{
     console.log(err)
   })
+})
 
+const Users = [ 
+  { 
+      id: 1, 
+      email: "inflooence.testing@gmail.com", 
+      password: "inflooence.testing", 
+  }
+]
 
+app.post('/login', (req, res) => { 
+  console.log(req);
+  res.json({ 
+    name: "hello"
+  })
 })
 
 module.exports = app;
