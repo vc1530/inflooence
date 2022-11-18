@@ -59,22 +59,20 @@ export default function Home() {
         setVisibility(e);
     };
 
+  //creates a jwt when user clicks sign in 
   const handleSubmit = async (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-    console.log(data);
     try { 
       const formData = { 
         email: data.get('email'), 
         password: data.get('password'), 
       }
-      console.log(process.env)
       const res = await axios.post(
         `${process.env.REACT_APP_BACKEND}/login`, 
         formData
       )
       localStorage.setItem("token", res.data.token)
-      console.log(res) 
       const token = localStorage.getItem("token") 
       const response = await axios.get(
         `${process.env.REACT_APP_BACKEND}/user`, 
@@ -88,13 +86,10 @@ export default function Home() {
     }
   } 
 
+  //handles decoding the token that the google api creates 
   const handleResponse = async (res) => { 
-    console.log(res.credential) 
     localStorage.setItem("token", res.credential)
-    //const user = jwt_decode(res.credential)
-    //console.log(user) 
-    //localStorage.setItem("token", res.data.token)
-    //console.log(res) 
+    const user = jwt_decode(res.credential)
     const token = localStorage.getItem("token") 
     const response = await axios.get(
       `${process.env.REACT_APP_BACKEND}/user`, 
@@ -104,9 +99,10 @@ export default function Home() {
         },
       }
     )
-      console.log(response.data.user) 
+    console.log(response.data.user) 
   }
 
+  //google login 
   useEffect (() => { 
     /* global google */ 
     google.accounts.id.initialize({ 

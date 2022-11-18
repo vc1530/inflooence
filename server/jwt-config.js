@@ -1,10 +1,8 @@
 const path = require('path') 
-require("dotenv").config({ path: 'server/.env' }) 
+require("dotenv").config({ silent : true }) 
 const passportJWT = require("passport-jwt")
 const ExtractJwt = passportJWT.ExtractJwt
 const JwtStrategy = passportJWT.Strategy
-
-//const { User } = require('./models/User') 
 
 const Users = [ 
     { 
@@ -19,7 +17,6 @@ jwtOptions.jwtFromRequest = ExtractJwt.fromAuthHeaderWithScheme("JWT")
 jwtOptions.secretOrKey = process.env.JWT_SECRET
 
 const jwtStrategy = new JwtStrategy(jwtOptions, async (jwt_payload, done) => { 
-    console.log(jwt_payload)
     const user = Users.find(user => user.id == jwt_payload.id)
     if (user) { 
         return done(null, user) 

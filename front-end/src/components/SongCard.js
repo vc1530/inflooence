@@ -15,9 +15,10 @@ import no_url from '../images/no_url.png'
 
 const Song = props => {
   const theme = useTheme();
+  console.log(props) 
   return (
     <Card className = 'Song'>
-      <span className = "song-id">{props.id}</span>
+      <span className = "song-id">{props.rank}</span>
       <Box sx={{ display: 'flex', flexDirection: 'column', width: 160, }}>
         <CardContent sx={{ flex: '1 0 auto', overflow: 'scroll', height: '70px' }}>
           <Typography className="song-title" component="div" variant="h5">

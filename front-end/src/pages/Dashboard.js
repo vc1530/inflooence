@@ -14,15 +14,11 @@ import jwt_decode from "jwt-decode"
 
 const Dashboard = (props) => { 
 
-    const token = localStorage.getItem("token") 
-
     const [songs, setSongs] = useState([])
     const [tiktokers, setTiktokers] = useState([]) 
     const [search, setSearch] = useState('')
 
     useEffect(() => { 
-        const user = jwt_decode(token)
-        console.log(user) 
         axios.get(`${process.env.REACT_APP_BACKEND}/allsongs`) 
         .then(res =>{ 
             console.log(res.data.songs) 
@@ -31,26 +27,17 @@ const Dashboard = (props) => {
         .catch(err => console.log(err))
     }, [])
 
-    // useEffect(() => { 
-    //     Papa.parse(db, {
-    //         download: true, 
-    //         skipEmptyLines: true,
-    //         complete: function (results) {
-    //         console.log(results.data) 
-    //         setSongs(results.data)
-    //         },
-    //     });
-    //     Papa.parse(top250, {
-    //         download: true, 
-    //         skipEmptyLines: true,
-    //         complete: function (results) {
-    //         console.log(results.data.shift()) 
-    //         setTiktokers(results.data)
-    //         console.log(tiktokers) 
-    //         },
-    //     });
-    // }, [])
-
+    useEffect(() => { 
+        Papa.parse(top250, {
+            download: true, 
+            skipEmptyLines: true,
+            complete: function (results) {
+            console.log(results.data.shift()) 
+            setTiktokers(results.data)
+            console.log(tiktokers) 
+            },
+        });
+    }, [])
 
     return ( 
         <div> 
@@ -74,7 +61,8 @@ const Dashboard = (props) => {
                                         title = {song.title} 
                                         cover = {song.url} 
                                         artist = {song.artist} 
-                                        id = {i + 1} 
+                                        id = {song._id} 
+                                        rank = {i + 1} 
                                     />
                                 </Grid> 
                             ) 
