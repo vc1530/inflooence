@@ -92,7 +92,7 @@ def shutdown_db_client():
 # artist_list = soup.select('.artist')
 # list_songs_obj = []
 
-# limitless scroll
+# limitless scroll, test timeout
 # time.sleep(2)  # Allow 2 seconds for the web page to open
 # scroll_pause_time = 1 # 
 # screen_height = driver.execute_script("return window.screen.height;")   # get the screen height of the web
