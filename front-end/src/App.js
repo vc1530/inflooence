@@ -9,7 +9,7 @@ import { green, pink } from '@mui/material/colors';
 import axios from "axios"
 import { useEffect, useState } from 'react'
 import Papa from 'papaparse'
-// import Test from './pages/Test'
+//import TestList from './pages/TestList'
 
 const theme = createTheme(
   {
@@ -61,8 +61,8 @@ function App() {
           </main>
         </Router>
       </ThemeProvider>
-      {/* <div ClassName="test">
-        <Test/>
+      {/* <div className="test">
+        <TestList/>
       </div> */}
 
     </div>
