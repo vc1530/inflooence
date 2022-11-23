@@ -9,11 +9,12 @@ const cors = require('cors')
 // enable cors
 app.use(cors())
 const path = require('path') 
+const PORT = process.env.PORT || 8888
 
 require("dotenv").config({ silent: true })
 
-app.listen(8888, function() {
-    console.log('server running on port 8888');
+app.listen(PORT, function() {
+    console.log('server running on port 8888 / render');
 } )
 app.use(express.json());
 
