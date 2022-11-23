@@ -71,9 +71,9 @@ def shutdown_db_client():
 
 # app.include_router(book_router, tags=["songs"], prefix="/song")
 
-# SPOTIPY_CLIENT_SECRET = "ba457fdecdc3453c87b7e5aaba0123fc"
-# SPOTIPY_CLIENT_ID = "0048909068294db1b98e49ed9c7d5dc8"
-# SPOTIPY_REDIRECT_URI = "http://localhost:8888/callback"
+SPOTIPY_CLIENT_SECRET="ba457fdecdc3453c87b7e5aaba0123fc"
+SPOTIPY_CLIENT_ID="0048909068294db1b98e49ed9c7d5dc8"
+SPOTIPY_REDIRECT_URI="http://localhost:8888/callback"
 
 
 # # ------------ SCRAPING --------------------###
