@@ -1,6 +1,6 @@
 import './Home.css'
 import * as React from 'react';
-import {useState} from 'react'; 
+import {useState, useEffect} from 'react'; 
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
@@ -14,7 +14,9 @@ import Typography from '@mui/material/Typography';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { green, pink } from '@mui/material/colors';
 import Icon from '../images/icon.gif'
-import CustomPopup from "./Popup"
+import CustomPopup from "../components/Popup"
+import jwt_decode from "jwt-decode"
+import axios from 'axios';
 
 function Copyright(props) {
   return (
@@ -57,14 +59,64 @@ export default function Home() {
         setVisibility(e);
     };
 
-  const handleSubmit = (event) => {
+  //creates a jwt when user clicks sign in 
+  const handleSubmit = async (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-    console.log({
-      email: data.get('email'),
-      password: data.get('password'),
-    });
-  };
+    try { 
+      const formData = { 
+        email: data.get('email'), 
+        password: data.get('password'), 
+      }
+      const res = await axios.post(
+        `${process.env.REACT_APP_BACKEND}/login`, 
+        formData
+      )
+      localStorage.setItem("token", res.data.token)
+      const token = localStorage.getItem("token") 
+      const response = await axios.get(
+        `${process.env.REACT_APP_BACKEND}/user`, 
+        { 
+          headers: { Authorization: `JWT ${token}` },
+        }
+      )
+      console.log(response.data.user) 
+    } catch (err) { 
+      console.log("error!") 
+    }
+  } 
+
+  //handles decoding the token that the google api creates 
+  const handleResponse = async (res) => { 
+    localStorage.setItem("token", res.credential)
+    const user = jwt_decode(res.credential)
+    const token = localStorage.getItem("token") 
+    const response = await axios.get(
+      `${process.env.REACT_APP_BACKEND}/user`, 
+      { 
+        headers: { 
+          Authorization: `JWT ${token}`, 
+        },
+      }
+    )
+    console.log(response.data.user) 
+  }
+
+  //google login 
+  useEffect (() => { 
+    /* global google */ 
+    google.accounts.id.initialize({ 
+      client_id: "763591101926-70b39abj3og3mclecrhhsdhmtkctlci5.apps.googleusercontent.com", 
+      callback: handleResponse, 
+    })
+
+    google.accounts.id.renderButton( 
+      document.getElementById("signInDiv"), 
+      {theme: "outline", size: "large"}
+    )
+
+    google.accounts.id.prompt()
+  }, [])
 
   return (
     <ThemeProvider theme={theme}>
@@ -141,6 +193,8 @@ export default function Home() {
                   <Link variant="body2" sx={{color: pink[500]}} onClick={e => setVisibility(!visibility)}>
                     {"Don't have an account? Sign Up"}
                   </Link>
+                  <div id="signInDiv">
+                  </div>
                 </Grid>
               </Grid>
               <Copyright sx={{ mt: 5 }} />
