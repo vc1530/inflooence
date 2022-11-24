@@ -5,8 +5,8 @@
   "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node server/app.js",
-    "install": "npm install && pip3 -r requirements.txt"
+    "install": "npm install && pip3 -r requirements.txt",
+    "start": "node server/app.js"
     },
   "author": "",
   "license": "ISC",
