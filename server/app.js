@@ -109,62 +109,62 @@ app.get('/:id', async (req, res) => {
 //this is me trying to implement login 
 //just for funsies 
 // - vanessa 
-const Users = [ 
-  { 
-      id: 1, 
-      email: "inflooence.testing@gmail.com", 
-      password: "inflooence.testing", 
-  }
-]
+// const Users = [ 
+//   { 
+//       id: 1, 
+//       email: "inflooence.testing@gmail.com", 
+//       password: "inflooence.testing", 
+//   }
+// ]
 
 const jwt = require("jsonwebtoken")
 
 //creating a jwt to send back to front end 
-app.post('/login', (req, res) => { 
-  console.log(req.body);
-  const user = Users.find(user => 
-    user.email == req.body.email && user.password == req.body.password
-  )
-  const token = jwt.sign({id: user.id}, jwtOptions.secretOrKey) 
-  res.json({ 
-    success: true, 
-    token: token, 
-    id: user.id, 
-  })
-})
+// app.post('/login', (req, res) => { 
+//   console.log(req.body);
+//   const user = Users.find(user => 
+//     user.email == req.body.email && user.password == req.body.password
+//   )
+//   const token = jwt.sign({id: user.id}, jwtOptions.secretOrKey) 
+//   res.json({ 
+//     success: true, 
+//     token: token, 
+//     id: user.id, 
+//   })
+// })
 
 //IGNORE THIS FOR NOW... 
 //i was trying to implement google login but it is not working haha 
-const passport = require("passport")
-app.use(passport.initialize())
+// const passport = require("passport")
+// app.use(passport.initialize())
 
-const { jwtOptions, jwtStrategy } = require("./jwt-config.js") 
-passport.use(jwtStrategy)
+// const { jwtOptions, jwtStrategy } = require("./jwt-config.js") 
+// passport.use(jwtStrategy)
 
-const passport_jwt = passport.authenticate('jwt', { session: false }) 
-app.use(passport_jwt)
+// const passport_jwt = passport.authenticate('jwt', { session: false }) 
+// app.use(passport_jwt)
 
-require('./google-strategy.js') 
-const passport_google = passport.authenticate( 'google', {
-  successRedirect: '/auth/google/success',
-  failureRedirect: '/auth/google/failure', 
-  session: false, 
-})
-app.use(passport_google) 
+// require('./google-strategy.js') 
+// const passport_google = passport.authenticate( 'google', {
+//   successRedirect: '/auth/google/success',
+//   failureRedirect: '/auth/google/failure', 
+//   session: false, 
+// })
+// app.use(passport_google) 
 
-//this is the part that doesn't work lol 
-app.get('/user', (req, res) => { 
-  console.log(req.user) 
-  res.json({ 
-    success: true, 
-    user: req.user, 
-  })
-})
+// //this is the part that doesn't work lol 
+// app.get('/user', (req, res) => { 
+//   console.log(req.user) 
+//   res.json({ 
+//     success: true, 
+//     user: req.user, 
+//   })
+// })
 
-app.get('/oauth2/redirect/google',
-  passport.authenticate('google', { failureRedirect: '/login', failureMessage: true }),
-  function(req, res) {
-    res.redirect('/');
-  });
+// app.get('/oauth2/redirect/google',
+//   passport.authenticate('google', { failureRedirect: '/login', failureMessage: true }),
+//   function(req, res) {
+//     res.redirect('/');
+//   });
 
 module.exports = app;
