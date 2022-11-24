@@ -117,7 +117,7 @@ app.get('/:id', async (req, res) => {
 //   }
 // ]
 
-const jwt = require("jsonwebtoken")
+// const jwt = require("jsonwebtoken")
 
 //creating a jwt to send back to front end 
 // app.post('/login', (req, res) => { 

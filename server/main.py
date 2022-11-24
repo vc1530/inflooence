@@ -9,8 +9,8 @@ from webdriver_manager.chrome import ChromeDriverManager
 from selenium.webdriver.chrome.options import Options
 from bs4 import BeautifulSoup
 import csv
-import mysql.connector as msql
-from mysql.connector import Error
+# import mysql.connector as msql
+# from mysql.connector import Error
 import pandas as pd
 load_dotenv()
 SPOTIPY_CLIENT_ID = os.getenv('SPOTIPY_CLIENT_ID')
