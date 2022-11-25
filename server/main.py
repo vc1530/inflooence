@@ -11,7 +11,7 @@ from bs4 import BeautifulSoup
 import csv
 # import mysql.connector as msql
 # from mysql.connector import Error
-import pandas as pd
+# import pandas as pd
 load_dotenv()
 SPOTIPY_CLIENT_ID = os.getenv('SPOTIPY_CLIENT_ID')
 SPOTIPY_CLIENT_SECRET = os.getenv('SPOTIPY_CLIENT_SECRET')
@@ -23,7 +23,6 @@ import spotipy
 import sys
 import pprint
 import json
-import pymongo
 from pymongo import MongoClient, InsertOne
 from fastapi import FastAPI
 from dotenv import dotenv_values
