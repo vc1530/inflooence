@@ -22,7 +22,7 @@ app.use(express.json());
 const { spawn } = require('child_process');
 
 const childPython = spawn('python3', ['main.py']);
-
+console.log(childPython)
 childPython.stdout.on('data', (data) => {
   console.log(`stdout: ${data}`);
 });
