@@ -23,8 +23,13 @@ const { spawn } = require('child_process');
 
 const childPython = spawn('python3', ['main.py']);
 console.log(childPython)
+
 childPython.stdout.on('data', (data) => {
   console.log(`stdout: ${data}`);
+});
+
+childPython.on('close', (code) => {
+  console.log(`child process exited with code ${code}`);
 });
 
 
