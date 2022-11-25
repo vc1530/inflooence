@@ -18,7 +18,9 @@ app.listen(PORT, function() {
 } )
 app.use(express.json());
 
-const { spawn } = require('node:child_process');
+// const { spawn } = require('node:child_process');
+const { spawn } = require('child_process');
+
 const childPython = spawn('python3', ['main.py']);
 
 childPython.stdout.on('data', (data) => {
@@ -105,6 +107,12 @@ app.get('/:id', async (req, res) => {
     })
   }
 })
+
+// apparently needed to be hosted
+app.get('/', (req, res) => {
+  res.sendStatus(200)
+})
+
 
 //this is me trying to implement login 
 //just for funsies 
