@@ -1,16 +1,21 @@
 
 
+from dotenv import load_dotenv
+import os
 from pickletools import pylist
-
 from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
 from webdriver_manager.chrome import ChromeDriverManager
 from selenium.webdriver.chrome.options import Options
 from bs4 import BeautifulSoup
 import csv
-import mysql.connector as msql
-from mysql.connector import Error
-import pandas as pd
+# import mysql.connector as msql
+# from mysql.connector import Error
+# import pandas as pd
+load_dotenv()
+SPOTIPY_CLIENT_ID = os.getenv('SPOTIPY_CLIENT_ID')
+SPOTIPY_CLIENT_SECRET = os.getenv('SPOTIPY_CLIENT_SECRET')
+SPOTIPY_REDIRECT_URI = os.getenv('SPOTIPY_REDIRECT_URI')
 from search_spotify import search_sp
 
 from spotipy.oauth2 import SpotifyClientCredentials
@@ -18,16 +23,15 @@ import spotipy
 import sys
 import pprint
 import json
-import pymongo
 from pymongo import MongoClient, InsertOne
 from fastapi import FastAPI
 from dotenv import dotenv_values
 from routes import router as book_router
 
 import time
-# from dotenv import load_dotenv
-# load_dotenv()
-# import os
+
+
+
 
 
 #install pymongo, spotipy, fastapi, pythonshell, bs4, webdriver-manager, seleniumin terminal
