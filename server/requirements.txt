@@ -4,7 +4,7 @@ brotli==1.0.9
 brotlicffi==1.0.9.2
 ConfigParser==5.3.0
 cryptography==38.0.3
-ctypes_snappy==1.03
+# ctypes_snappy==1.03
 curio==1.6
 cython==0.29.32
 Cython==0.29.32
@@ -21,11 +21,11 @@ keyring==23.11.0
 lockfile==0.12.2
 loop==1.0.0
 lxml==4.9.1
-mysql_connector_repackaged==0.3.1
+# mysql_connector_repackaged==0.3.1
 numpy==1.23.4
 ordereddict==1.1
 outcome==1.2.0
-pandas==1.5.1
+# pandas==1.5.1
 protobuf==4.21.9
 Pygments==2.13.0
 pymongo_auth_aws==1.1.0
