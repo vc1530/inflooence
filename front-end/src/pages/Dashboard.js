@@ -11,6 +11,7 @@ import db from '../data/db.csv'
 import top250 from '../data/top-250-tiktokers.csv'
 import UserCard from '../components/UserCard' 
 import jwt_decode from "jwt-decode"
+import TestML from './TestML';
 
 const Dashboard = (props) => { 
 
@@ -46,6 +47,7 @@ const Dashboard = (props) => {
     }) 
 
     return ( 
+        <>
         <div> 
             <Header setSearch={setSearch}/> 
             <Grid container spacing ={4} justifyContent='center' padding='20px'> 
@@ -74,6 +76,8 @@ const Dashboard = (props) => {
                             ) 
                         })}
                     </Grid>
+                    <TestML></TestML>
+
                 </Grid> 
                 <Grid item xs={12} lg={6}>
                     <Typography component="h2" variant="h2" padding='20px' sx={{fontSize: '24px'}}>
@@ -103,7 +107,10 @@ const Dashboard = (props) => {
                     </Grid>
                 </Grid>
             </Grid>
+            
         </div>
+        </>
+
     )
 }
 
