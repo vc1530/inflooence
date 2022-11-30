@@ -3,21 +3,14 @@ require("dotenv").config({ silent : true })
 const passportJWT = require("passport-jwt")
 const ExtractJwt = passportJWT.ExtractJwt
 const JwtStrategy = passportJWT.Strategy
+const User = require('../models/User')
 
-const Users = [ 
-    { 
-        id: 1, 
-        email: "inflooence.testing@gmail.com", 
-        password: "inflooence.testing", 
-    }
-]
-
-let jwtOptions = {}
+const jwtOptions = {}
 jwtOptions.jwtFromRequest = ExtractJwt.fromAuthHeaderWithScheme("JWT") 
 jwtOptions.secretOrKey = process.env.JWT_SECRET
 
 const jwtStrategy = new JwtStrategy(jwtOptions, async (jwt_payload, done) => { 
-    const user = Users.find(user => user.id == jwt_payload.id)
+    const user = await User.findOne({_id: jwt_payload.id})
     if (user) { 
         return done(null, user) 
     } else {
@@ -26,6 +19,6 @@ const jwtStrategy = new JwtStrategy(jwtOptions, async (jwt_payload, done) => {
 })
 
 module.exports = {
-  jwtOptions,
+  jwtOptions, 
   jwtStrategy,
 }

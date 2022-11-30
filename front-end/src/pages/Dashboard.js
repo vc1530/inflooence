@@ -21,7 +21,6 @@ const Dashboard = (props) => {
     useEffect(() => { 
         axios.get(`${process.env.REACT_APP_BACKEND}/allsongs`) 
         .then(res =>{ 
-            console.log(res.data.songs) 
             setSongs(res.data.songs) 
         })
         .catch(err => console.log(err))
@@ -32,12 +31,19 @@ const Dashboard = (props) => {
             download: true, 
             skipEmptyLines: true,
             complete: function (results) {
-            console.log(results.data.shift()) 
             setTiktokers(results.data)
-            console.log(tiktokers) 
             },
         });
     }, [])
+
+    useEffect(() => { 
+        console.log(localStorage.getItem('token'))
+        axios.get(`${process.env.REACT_APP_BACKEND}/user`, {
+            headers: { Authorization: `JWT ${localStorage.getItem('token')}` } 
+        })
+        .then(res=>console.log(res)) 
+        .catch(err=>console.log(err))
+    }) 
 
     return ( 
         <div> 

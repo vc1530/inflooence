@@ -6,10 +6,6 @@ import Song from './pages/Song'
 import './App.css';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { green, pink } from '@mui/material/colors';
-import axios from "axios"
-import { useEffect, useState } from 'react'
-import Papa from 'papaparse'
-//import TestList from './pages/TestList'
 
 const theme = createTheme(
   {
@@ -33,18 +29,6 @@ const theme = createTheme(
 
 function App() {
 
-  // const [songs, setSongs] = useState([])
-
-  // useEffect(() => { 
-  //   axios.get('https://my.api.mockaroo.com/songs.json?key=60fe9c50')
-  //   .then (res => { 
-  //       setSongs(res.data) 
-  //   }) 
-  //   .catch(err => { 
-  //       console.log(err) 
-  //   })
-  // }, [])
-
   return (
     <div className="App">
       <ThemeProvider theme={theme}>
@@ -55,16 +39,10 @@ function App() {
               <Route path="/dashboard" element={<Dashboard />} /> 
               <Route path="/profile" element={<Profile />} /> 
               <Route path="/:id" element={<Song />} /> 
-              {/* <Route path="/test" element={<Test />} />  */}
-
             </Routes> 
           </main>
         </Router>
       </ThemeProvider>
-      {/* <div className="test">
-        <TestList/>
-      </div> */}
-
     </div>
 
   );
