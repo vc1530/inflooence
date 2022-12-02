@@ -9,7 +9,6 @@ import no_url from '../images/no_url.png'
 const Song = (props) => { 
 
     const [song, setSong] = useState({})
-    const [search, setSearch] = useState('')
 
     let params = useParams();
 
@@ -19,25 +18,20 @@ const Song = (props) => {
         .get(`${process.env.REACT_APP_BACKEND}/${params.id}`)
         .then(res => setSong(res.data.song)) 
         .catch(err => console.log(err)) 
-    }, [])
+    }, [params.id])
 
     return ( 
         <div> 
-            <Header setSearch={setSearch} /> 
+            <Header /> 
             <Grid container spacing = {4} justifyContent='center' padding='20px' > 
                 <Grid item xs={6}> 
-                    <img src={song.url == "no_url" ? no_url : song.url} /> 
+                    <img src={song.url === 'no_url' ? no_url : song.url} alt='cover'/> 
                     <h1>{song.title}</h1>
                     <h2>{song.artist}</h2>
                 </Grid>
                 <Grid item xs={6}>
                     <BarGraph 
-                        title={song.title} 
-                        acousticness={+song.acousticness} 
-                        energy={+song.energy} 
-                        liveness={+song.liveness} 
-                        loudness={+song.loudness} 
-                        tempo={0.1} 
+                        song = {song} 
                     /> 
                 </Grid>
             </Grid>

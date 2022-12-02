@@ -1,7 +1,5 @@
-import TestML from "./TestML"
-
 const Profile = () => { 
-    return ( 
+        return ( 
 
         <>
 

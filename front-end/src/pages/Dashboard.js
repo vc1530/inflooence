@@ -5,19 +5,17 @@ import { useEffect, useState } from 'react'
 import Typography from '@mui/material/Typography';
 import axios from "axios"
 import Grid from '@mui/material/Grid';
-import CustomPopup from "../components/SongPopup"
 import Papa from 'papaparse'
-import db from '../data/db.csv'
 import top250 from '../data/top-250-tiktokers.csv'
 import UserCard from '../components/UserCard' 
-import jwt_decode from "jwt-decode"
 import TestML from './TestML';
+import LandingScreen from '../components/LandingScreen';
+import Body from '../components/Body' 
 
 const Dashboard = (props) => { 
 
     const [songs, setSongs] = useState([])
     const [tiktokers, setTiktokers] = useState([]) 
-    const [search, setSearch] = useState('')
 
     useEffect(() => { 
         axios.get(`${process.env.REACT_APP_BACKEND}/allsongs`) 
@@ -46,11 +44,16 @@ const Dashboard = (props) => {
         .catch(err=>console.log(err))
     }) 
 
+    //placeholder
+    const search = '' 
+
     return ( 
         <>
-        <div> 
-            <Header setSearch={setSearch}/> 
-            <Grid container spacing ={4} justifyContent='center' padding='20px'> 
+        <div className='Dashboard'> 
+            <Header/> 
+            <LandingScreen /> 
+            <Body /> 
+            {/* <Grid id='main' container spacing ={4} justifyContent='center' padding='20px'> 
                 <Grid item xs={12} md={6}>
                     <Typography component="h2" variant="h2" padding='20px' sx={{fontSize: '24px'}}>
                         Current Top Hits 
@@ -106,7 +109,7 @@ const Dashboard = (props) => {
                         })}
                     </Grid>
                 </Grid>
-            </Grid>
+            </Grid> */}
             
         </div>
         </>

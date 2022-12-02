@@ -1,4 +1,38 @@
-.dashboard-logo { 
+.Header {
+    display: flex; 
+    justify-content: space-between;
+    align-items: center; 
+    background-color: black;
     color: white; 
-    text-decoration: none;
+    position: fixed; 
+    min-width: 100vw; 
+    padding: 10px 0; 
+    height: 75px; 
+    top: 0; 
+}
+
+.Header a { 
+    color: white; 
+    text-decoration: none; 
+    margin-left: 40px; 
+}
+
+.Side { 
+    margin-right: 40px; 
+}
+
+.Header button { 
+    color: white; 
+    background: black; 
+    border: solid 2px white; 
+    padding: 20px; 
+    margin: 0 10px; 
+    border-radius: 20px; 
+    font-family: 'Montserrat', sans-serif; 
+    font-size: 12pt; 
+}
+
+.Header button:hover { 
+    color: var(--accent-color); 
+    border-color: var(--accent-color); 
 }

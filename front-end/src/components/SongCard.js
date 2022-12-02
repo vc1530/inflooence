@@ -15,7 +15,6 @@ import no_url from '../images/no_url.png'
 
 const Song = props => {
   const theme = useTheme();
-  console.log(props) 
   return (
     <Card className = 'Song'>
       <span className = "song-id">{props.rank}</span>
@@ -43,7 +42,7 @@ const Song = props => {
       <CardMedia
         component="img"
         sx={{ width: 120 }}
-        image={props.cover == "no_url" ? no_url : props.cover} 
+        image={props.cover === "no_url" ? no_url : props.cover} 
         alt="Album cover"
       />
     </Card>

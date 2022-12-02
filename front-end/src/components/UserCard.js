@@ -14,7 +14,7 @@ const UserCard = (props) => {
                 {props.username} 
             </div>
             <div className="country"> 
-                {flag(props.country == "U.S.A" ? "USA" : props.country)}
+                {flag(props.country === "U.S.A" ? "USA" : props.country)}
             </div>
             <div className="followers">  
                 {props.followers} 

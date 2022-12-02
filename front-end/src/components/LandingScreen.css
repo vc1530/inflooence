@@ -1,0 +1,47 @@
+.landingScreen { 
+    background-color: black;
+    color: white; 
+    padding: 20px 40px; 
+    display: flex; 
+    flex-direction: column; 
+}
+
+.landingText {
+    display: flex; 
+    flex-direction: row; 
+    align-items: flex-end; 
+    justify-content: space-between;
+}
+
+.leftText { 
+    width: 50%; 
+}
+
+.leftText h1 {
+    font-size: 50pt;
+    margin: 0; 
+    border-left: solid 2px white; 
+    padding: 10px; 
+}
+
+.leftText h2 { 
+    color: var(--accent-color); 
+    display: flex; 
+    align-items: center; 
+    justify-content: center;
+}
+
+.rightText { 
+    width: 40%;
+}
+
+.rightText img { 
+    width: 200px!important; 
+    height: 200px!important; 
+}
+
+.rightText div { 
+    text-align: left; 
+    font-style: bold; 
+    font-size: 14pt; 
+}

@@ -1,0 +1,39 @@
+.Body { 
+    width: 80%; 
+    margin: auto; 
+}
+
+.Body header { 
+    height: 100px; 
+    display: flex; 
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap: 2rem; 
+    position: sticky; 
+}
+
+.Body header h3 { 
+    padding: 5px 0; 
+    border-color: var(--accent-color);
+    border-width: 2px;
+    font-size: 18pt; 
+    color: gray; 
+}
+
+.Body header h3:hover { 
+    color: var(--accent-color)!important;
+}
+
+#topSongsHeader {
+    color: var(--accent-color); 
+    border-bottom-style: solid;
+}
+
+#topSongs header { 
+    height: 50px; 
+    background-color: lightgray;
+    border-radius: 10px; 
+    display: flex; 
+    flex-direction: row; 
+}
