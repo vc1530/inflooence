@@ -6,45 +6,61 @@ import Typography from '@mui/material/Typography';
 import axios from "axios"
 import Grid from '@mui/material/Grid';
 import CustomPopup from "../components/SongPopup"
-import Papa from 'papaparse'
-import db from '../data/db.csv'
-import top250 from '../data/top-250-tiktokers.csv'
 import UserCard from '../components/UserCard' 
 import jwt_decode from "jwt-decode"
-import TestML from './TestML';
 
-const Dashboard = (props) => { 
+const SavedSongsList = (props) => { 
 
     const [songs, setSongs] = useState([])
-    const [tiktokers, setTiktokers] = useState([]) 
+    const [sid, setSid] = useState([])
     const [search, setSearch] = useState('')
 
+//////**************************************************************** - phoebus */
+
+    // console.log("songs: ", songs);
+    // console.log("sid: ", sid);
+
+    // this gets you list of song ids
     useEffect(() => { 
-        axios.get(`${process.env.REACT_APP_BACKEND}/allsongs`) 
+        //********************** hardcoded user, need to validate if user has signed in yet */
+        axios.get(`${process.env.REACT_APP_BACKEND}/allsavedsongs/638672dfe7e787c5ead8774c`) 
         .then(res =>{ 
-            setSongs(res.data.songs) 
+            setSid(res.data.saved_songs) 
         })
         .catch(err => console.log(err))
     }, [])
 
+    // now i need to create a list of song objects to display on the website
     useEffect(() => { 
-        Papa.parse(top250, {
-            download: true, 
-            skipEmptyLines: true,
-            complete: function (results) {
-            setTiktokers(results.data)
-            },
-        });
-    }, [])
+        //********************** hardcoded user, need to validate if user has signed in yet */
 
-    // useEffect(() => { 
-    //     console.log(localStorage.getItem('token'))
-    //     axios.get(`${process.env.REACT_APP_BACKEND}/user`, {
-    //         headers: { Authorization: `JWT ${localStorage.getItem('token')}` } 
+        sid.map((sid) =>{
+            axios.get(`${process.env.REACT_APP_BACKEND}/song/${sid}`) 
+            .then(res =>{
+                setSongs(current => [...current, res.data.song]);
+            })
+            .catch(err => console.log(err))
+        })
+    }, [sid])
+
+// current bug: each songid is being added to list of song objects twice
+//////**************************************************************** - phoebus */
+
+
+    // const test = async() => {
+    //     // declare the data fetching function
+    //     const fetchData = async () => {
+    //       const res = await axios.get(`${process.env.REACT_APP_BACKEND}/allsavedsongs/638672dfe7e787c5ead8774c`);
+    //       res.data.saved_songs.map((sid) =>{
+    //         axios.get(`${process.env.REACT_APP_BACKEND}/song/${sid}`) 
+    //         .then(res =>{
+    //             setSongs(current => [...current, res.data.song]);
+    //         })
+    //         .catch(err => console.log(err));
+
     //     })
-    //     .then(res=>console.log(res)) 
-    //     .catch(err=>console.log(err))
-    // }) 
+
+
 
     return ( 
         <>
@@ -78,36 +94,9 @@ const Dashboard = (props) => {
                             ) 
                         })}
                     </Grid>
-                    <TestML></TestML>
 
                 </Grid> 
-                <Grid item xs={12} lg={6}>
-                    <Typography component="h2" variant="h2" padding='20px' sx={{fontSize: '24px'}}>
-                        Top TikTok Users
-                    </Typography>
-                    <Grid container justifyContent='center' padding='20px'> 
-                        {tiktokers
-                        .filter(tiktoker => { 
-                            if (tiktokers === []) return tiktoker; 
-                            else if (tiktoker[1].toLowerCase().includes(search.toLowerCase())) return tiktoker; 
-                            return ''; 
-                        })
-                        .map(tiktoker => { 
-                            return (
-                                <Grid item xs = {12}>
-                                    <UserCard 
-                                        rank = {tiktoker[0]} 
-                                        username = {tiktoker[1]} 
-                                        country = {tiktoker[2]} 
-                                        followers = {tiktoker[3]} 
-                                        views = {tiktoker[4]} 
-                                        likes = {tiktoker[5]} 
-                                    />
-                                </Grid> 
-                            ) 
-                        })}
-                    </Grid>
-                </Grid>
+            
             </Grid>
             
         </div>
@@ -116,4 +105,4 @@ const Dashboard = (props) => {
     )
 }
 
-export default Dashboard 
+export default SavedSongsList 

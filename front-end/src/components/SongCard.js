@@ -12,11 +12,20 @@ import SkipNextIcon from '@mui/icons-material/SkipNext';
 import { useTheme } from '@mui/material/styles';
 import Link from '@mui/material/Link';
 import no_url from '../images/no_url.png'
+import { useState, useEffect } from 'react';
+import axios from "axios"
+import {useParams} from 'react-router-dom' 
+
 
 const Song = props => {
+  const [savedSongs, setSavedSongs] = useState(0);
   const theme = useTheme();
-  console.log(props) 
+  // console.log(props) 
+  // console.log("user", props.user);
+
+
   return (
+    <>
     <Card className = 'Song'>
       <span className = "song-id">{props.rank}</span>
       <Box sx={{ display: 'flex', flexDirection: 'column', width: 160, }}>
@@ -47,6 +56,15 @@ const Song = props => {
         alt="Album cover"
       />
     </Card>
+    <button onClick={() => 
+      axios.get(`${process.env.REACT_APP_BACKEND}/savesong/${props.user}/${props.id}`) 
+      .then(res =>{ 
+          // setSongs(res.data.songs) 
+      })
+      .catch(err => console.log(err))
+    }>SAVE SONG</button>
+
+    </>
   );
 }  
 
