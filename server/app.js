@@ -124,6 +124,7 @@ app.get('/savesong/:user/:songid', async (req, res) => {
 // this returns list of ID of user saved songs 
 app.get('/allsavedsongs/:id', async (req,res)=>{
   try { 
+    console.log(req.params.id) 
    const user = await User.findById(req.params.id.trim()) 
    res.json({ 
      saved_songs: user.savedSongs, 
