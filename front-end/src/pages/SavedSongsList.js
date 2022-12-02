@@ -8,13 +8,15 @@ import Grid from '@mui/material/Grid';
 import CustomPopup from "../components/SongPopup"
 import UserCard from '../components/UserCard' 
 import jwt_decode from "jwt-decode"
+import { Navigate } from 'react-router-dom' 
 
 const SavedSongsList = (props) => { 
 
     const [songs, setSongs] = useState([])
     const [sid, setSid] = useState([])
-    const [search, setSearch] = useState('')
     const [flag, setFlag] = useState(0)
+    const [user, setUser] = useState({})
+    const [loggedIn, setLoggedIn] = useState(false) 
 
 ////// show list of songs saved by user - phoebus */
 
@@ -24,7 +26,23 @@ const SavedSongsList = (props) => {
         //            /allsavedsongs/:userid
         // gets you a list of song ids saved for each user
 
-        axios.get(`${process.env.REACT_APP_BACKEND}/allsavedsongs/638672dfe7e787c5ead8774c`) 
+        const token = localStorage.getItem('token') 
+        axios.get(`${process.env.REACT_APP_BACKEND}/user`, { 
+            headers: { 
+                Authorization: `JWT ${token}`
+            }
+        })
+        .then(res=>
+            { 
+                setUser(res.data.user)
+                setLoggedIn(true) 
+            } ) 
+        .catch(err=>{ 
+            console.log(err)
+            setLoggedIn(false) 
+        })  
+
+        axios.get(`${process.env.REACT_APP_BACKEND}/allsavedsongs/${user._id}`) 
         .then(res =>{ 
             setSid(res.data.saved_songs)
             if(flag === 0){
@@ -44,12 +62,15 @@ const SavedSongsList = (props) => {
             })
         })
         .catch(err => console.log(err))
-    }, [flag])
+    }, [flag, loggedIn])
 
-    return ( 
+    //placeholder 
+    const search = '' 
+
+    const page = ( 
         <>
         <div> 
-            <Header setSearch={setSearch}/> 
+            <Header /> 
             <Grid container spacing ={4} justifyContent='center' padding='20px'> 
                 <Grid item xs={12} md={6}>
                     <Typography component="h2" variant="h2" padding='20px' sx={{fontSize: '24px'}}>
@@ -87,6 +108,8 @@ const SavedSongsList = (props) => {
         </>
 
     )
+
+    return loggedIn ? page : <Navigate to='/' />
 }
 
 export default SavedSongsList 
