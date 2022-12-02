@@ -14,53 +14,37 @@ const SavedSongsList = (props) => {
     const [songs, setSongs] = useState([])
     const [sid, setSid] = useState([])
     const [search, setSearch] = useState('')
+    const [flag, setFlag] = useState(0)
 
-//////**************************************************************** - phoebus */
+////// show list of songs saved by user - phoebus */
 
-    // console.log("songs: ", songs);
-    // console.log("sid: ", sid);
-
-    // this gets you list of song ids
     useEffect(() => { 
         //********************** hardcoded user, need to validate if user has signed in yet */
+
+        //            /allsavedsongs/:userid
+        // gets you a list of song ids saved for each user
+
         axios.get(`${process.env.REACT_APP_BACKEND}/allsavedsongs/638672dfe7e787c5ead8774c`) 
         .then(res =>{ 
-            setSid(res.data.saved_songs) 
+            setSid(res.data.saved_songs)
+            if(flag === 0){
+                setFlag(1);
+            }
+            // map out sid array to make list of song objects
+            sid.map((sid) =>{
+
+                //     //******* */     /song/sid 
+                //     // returns a song object for the songid sent
+
+                axios.get(`${process.env.REACT_APP_BACKEND}/song/${sid}`) 
+                .then(res =>{
+                    setSongs(current => [...current, res.data.song]);
+                })
+                .catch(err => console.log(err))
+            })
         })
         .catch(err => console.log(err))
-    }, [])
-
-    // now i need to create a list of song objects to display on the website
-    useEffect(() => { 
-        //********************** hardcoded user, need to validate if user has signed in yet */
-
-        sid.map((sid) =>{
-            axios.get(`${process.env.REACT_APP_BACKEND}/song/${sid}`) 
-            .then(res =>{
-                setSongs(current => [...current, res.data.song]);
-            })
-            .catch(err => console.log(err))
-        })
-    }, [sid])
-
-// current bug: each songid is being added to list of song objects twice
-//////**************************************************************** - phoebus */
-
-
-    // const test = async() => {
-    //     // declare the data fetching function
-    //     const fetchData = async () => {
-    //       const res = await axios.get(`${process.env.REACT_APP_BACKEND}/allsavedsongs/638672dfe7e787c5ead8774c`);
-    //       res.data.saved_songs.map((sid) =>{
-    //         axios.get(`${process.env.REACT_APP_BACKEND}/song/${sid}`) 
-    //         .then(res =>{
-    //             setSongs(current => [...current, res.data.song]);
-    //         })
-    //         .catch(err => console.log(err));
-
-    //     })
-
-
+    }, [flag])
 
     return ( 
         <>
