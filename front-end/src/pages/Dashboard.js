@@ -37,14 +37,14 @@ const Dashboard = (props) => {
         });
     }, [])
 
-    // useEffect(() => { 
-    //     console.log(localStorage.getItem('token'))
-    //     axios.get(`${process.env.REACT_APP_BACKEND}/user`, {
-    //         headers: { Authorization: `JWT ${localStorage.getItem('token')}` } 
-    //     })
-    //     .then(res=>console.log(res)) 
-    //     .catch(err=>console.log(err))
-    // }) 
+    useEffect(() => { 
+        console.log(localStorage.getItem('token'))
+        axios.get(`${process.env.REACT_APP_BACKEND}/user`, {
+            headers: { Authorization: `JWT ${localStorage.getItem('token')}` } 
+        })
+        .then(res=>console.log(res)) 
+        .catch(err=>console.log(err))
+    }) 
 
     return ( 
         <>
