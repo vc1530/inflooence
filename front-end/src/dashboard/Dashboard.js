@@ -1,16 +1,13 @@
 import './Dashboard.css' 
 import Header from '../components/Header' 
-import SongCard from '../components/SongCard'
+import SongCard from './SongCard'
 import { useEffect, useState } from 'react'
-import Typography from '@mui/material/Typography';
 import axios from "axios"
 import Grid from '@mui/material/Grid';
 import Papa from 'papaparse'
 import top250 from '../data/top-250-tiktokers.csv'
-import UserCard from '../components/UserCard' 
-import TestML from './TestML';
-import LandingScreen from '../components/LandingScreen';
-import Body from '../components/Body' 
+import LandingScreen from './LandingScreen';
+import Body from './Body' 
 
 const Dashboard = (props) => { 
 

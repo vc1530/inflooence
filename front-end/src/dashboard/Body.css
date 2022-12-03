@@ -3,7 +3,7 @@
     margin: auto; 
 }
 
-.Body header { 
+#stickyHeader { 
     height: 100px; 
     display: flex; 
     flex-direction: row;
@@ -11,6 +11,13 @@
     align-items: center;
     gap: 2rem; 
     position: sticky; 
+    position: -webkit-sticky; 
+    top: 95px; 
+    background-color: white;
+    z-index: 1; 
+    transition: all .3s; 
+    min-height: 65px; 
+    border-radius: 0px 0px 20px 20px; 
 }
 
 .Body header h3 { 
@@ -19,6 +26,7 @@
     border-width: 2px;
     font-size: 18pt; 
     color: gray; 
+    transition: all .3s; 
 }
 
 .Body header h3:hover { 
@@ -28,12 +36,4 @@
 #topSongsHeader {
     color: var(--accent-color); 
     border-bottom-style: solid;
-}
-
-#topSongs header { 
-    height: 50px; 
-    background-color: lightgray;
-    border-radius: 10px; 
-    display: flex; 
-    flex-direction: row; 
 }

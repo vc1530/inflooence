@@ -1,6 +1,6 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 import Login from './pages/Login'
-import Dashboard from './pages/Dashboard' 
+import Dashboard from './dashboard/Dashboard' 
 import Profile from './pages/Profile' 
 import Song from './pages/Song'
 import './App.css';

@@ -1,6 +1,7 @@
 import './LandingScreen.css' 
 import { AiOutlineDown } from 'react-icons/ai'
 import Icon from '../images/icon.gif'
+import 'animate.css'
 
 export default function LandingScreen () { 
 
@@ -11,11 +12,14 @@ export default function LandingScreen () {
     }
 
     return ( 
-        <div className='landingScreen'> 
+        <div id='landing' className='landingScreen'> 
             <div className='landingText'> 
-                <div className='leftText'> 
+                <div className='leftText' id='fadeHeader'> 
                     <h1> 
-                        Check out the top trending songs of TikTok today
+                        <span className='animate__animated animate__fadeInDown fadeText1'>Check out the </span>
+                        <span className='animate__animated animate__fadeInDown fadeText2'>top trending </span>
+                        <span className='animate__animated animate__fadeInDown fadeText3'>songs of TikTok </span>
+                        <span className='animate__animated animate__fadeInDown fadeText4'>today </span>
                     </h1>
                 </div>
                 <div className='rightText'>
@@ -27,7 +31,7 @@ export default function LandingScreen () {
                 </div>
             </div>
             <div className='leftText'> 
-                <h2 onClick={handleScroll}> 
+                <h2 className='animate__animated animate__fadeIn fadeText5' onClick={handleScroll}> 
                     See below&ensp;
                     <AiOutlineDown /> 
                 </h2>

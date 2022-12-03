@@ -9,6 +9,7 @@
     padding: 10px 0; 
     height: 75px; 
     top: 0; 
+    z-index: 2; 
 }
 
 .Header a { 
