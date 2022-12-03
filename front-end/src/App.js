@@ -1,14 +1,11 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
-import Home from './pages/Home'
-import Dashboard from './pages/Dashboard' 
+import Login from './pages/Login'
+import Dashboard from './dashboard/Dashboard' 
 import Profile from './pages/Profile' 
 import Song from './pages/Song'
 import './App.css';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { green, pink } from '@mui/material/colors';
-import axios from "axios"
-import { useEffect, useState } from 'react'
-import Papa from 'papaparse'
 import TestML from './pages/TestML'
 
 const theme = createTheme(
@@ -23,7 +20,7 @@ const theme = createTheme(
       },
       typography: {
           allVariants: {
-            fontFamily: 'Nunito',
+            fontFamily: 'Montserrat, sans-serif', 
             textTransform: 'none',
             fontSize: 16,
           },
@@ -39,12 +36,11 @@ function App() {
         <Router>
           <main className="App-main">
             <Routes>
-              <Route path="/" element={<Home />} />
-              <Route path="/dashboard" element={<Dashboard />} /> 
+              <Route path="/login" element={<Login />} />
+              <Route path="/" element={<Dashboard />} /> 
               <Route path="/profile" element={<Profile />} /> 
               <Route path="/:id" element={<Song />} /> 
               <Route path="/test" element={<TestML />} /> 
-
             </Routes> 
           </main>
         </Router>

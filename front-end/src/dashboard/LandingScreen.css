@@ -1,0 +1,74 @@
+.landingScreen { 
+    background-color: black;
+    color: white; 
+    padding: 20px 40px; 
+    display: flex; 
+    flex-direction: column; 
+}
+
+.landingText {
+    display: flex; 
+    flex-direction: row; 
+    align-items: flex-end; 
+    justify-content: space-between;
+}
+
+.leftText { 
+    width: 50%; 
+}
+
+.leftText h1 {
+    font-size: 50pt;
+    margin: 0; 
+    border-left: solid 2px white; 
+    padding: 10px; 
+}
+
+.leftText h2 { 
+    color: var(--accent-color); 
+    display: flex; 
+    align-items: center; 
+    justify-content: center;
+}
+
+.rightText { 
+    width: 40%;
+}
+
+.rightText img { 
+    width: 200px!important; 
+    height: 200px!important; 
+}
+
+.rightText div { 
+    text-align: left; 
+    font-style: bold; 
+    font-size: 14pt; 
+}
+
+.fadeText1 {
+    -webkit-animation-delay: 200ms;
+    -moz-animation-delay: 200ms;
+    animation-delay: 200ms;
+}
+.fadeText2 {
+    -webkit-animation-delay: 400ms;
+    -moz-animation-delay: 400ms;
+    animation-delay: 400ms;
+}
+.fadeText3 {
+    -webkit-animation-delay: 600ms;
+    -moz-animation-delay: 600ms;
+    animation-delay: 600ms;
+}
+.fadeText4 {
+    -webkit-animation-delay: 800ms;
+    -moz-animation-delay: 800ms;
+    animation-delay: 800ms;
+}
+
+.fadeText5 { 
+    -webkit-animation-delay: 1100ms;
+    -moz-animation-delay: 1100ms;
+    animation-delay: 1100ms;
+}

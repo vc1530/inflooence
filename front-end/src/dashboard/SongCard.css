@@ -1,0 +1,37 @@
+.SongCard { 
+    display: flex; 
+    flex-direction: row;
+    margin:auto;  
+    height: 140px; 
+    align-items: center;
+    transition: .5s;  
+    border-radius: 20px; 
+}
+
+.SongCard span { 
+    color: black!important; 
+}
+
+.SongCard:hover{ 
+    background-color: rgb(252, 228, 232);
+    transition: .5s;  
+}
+
+.SongCard .rank {
+    font-size: x-large;
+    font-style: bold; 
+    color: var(--accent-color)!important;  
+}
+
+.songCover { 
+    width: 100px; 
+    height: 100px;
+    border-radius: 10px;  
+}
+
+.title { 
+    display: flex; 
+    flex-direction: row; 
+    align-items: center;
+    gap: 1rem; 
+}
