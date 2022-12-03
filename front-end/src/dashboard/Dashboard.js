@@ -70,7 +70,9 @@ const Dashboard = (props) => {
                                         cover = {song.url} 
                                         artist = {song.artist} 
                                         id = {song._id} 
-                                        rank = {i + 1} 
+                                        rank = {i + 1}
+                                        // NEED TO VALIDATE IF USER IS SIGNED IN
+                                        user = "638672dfe7e787c5ead8774c" 
                                     />
                                 </Grid> 
                             ) 

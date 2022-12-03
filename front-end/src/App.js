@@ -3,6 +3,7 @@ import Login from './pages/Login'
 import Dashboard from './dashboard/Dashboard' 
 import Profile from './pages/Profile' 
 import Song from './pages/Song'
+import SavedSongsList from './pages/SavedSongsList'
 import './App.css';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { green, pink } from '@mui/material/colors';
@@ -40,7 +41,10 @@ function App() {
               <Route path="/" element={<Dashboard />} /> 
               <Route path="/profile" element={<Profile />} /> 
               <Route path="/:id" element={<Song />} /> 
-              <Route path="/test" element={<TestML />} /> 
+              <Route path="/test" element={<TestML />} />
+              <Route path="/viewsavedsongs" element={<SavedSongsList />} /> 
+
+
             </Routes> 
           </main>
         </Router>

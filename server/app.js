@@ -5,13 +5,18 @@ const app = express();
 const morgan = require('morgan');
 const Song = require('./songModel.js')
 const cors = require('cors')
+const User = require('./models/User.js')
+
 
 // enable cors
 app.use(cors())
 const path = require('path') 
-const PORT = process.env.PORT || 8888
+// const PORT = process.env.PORT || 8888
+const PORT = 8888
+
 
 require("dotenv").config({ silent: true })
+
 
 app.listen(PORT, function() {
     console.log('server running on port 8888 / render');
@@ -22,20 +27,19 @@ app.use(express.json());
 const { spawn } = require('child_process');
 
 const childPython = spawn('python3', ['main.py']);
-console.log(childPython)
+// console.log(childPython)
 
 childPython.stdout.on('data', (data) => {
   console.log(`stdout: ${data}`);
 });
 
-childPython.stderr.on('data', (data) => {
-  console.error(`stderr: ${data}`);
-});
+// childPython.stderr.on('data', (data) => {
+//   console.error(`stderr: ${data}`);
+// });
 
-childPython.on('close', (code) => {
-  console.log(`child process exited with code ${code}`);
-});
-
+// childPython.on('close', (code) => {
+//   console.log(`child process exited with code ${code}`);
+// });
 
 const mongoose = require("mongoose");
 //configure mongoose
@@ -104,11 +108,56 @@ app.get('/allsongs', async (req,res)=>{
   })
  }
 })
+///////////////////////////////////// -- login stuff - phoebus
 
+// allow user to save a song name under his account
+app.get('/savesong/:user/:songid', async (req, res) => {
+  try {
+    await User.updateOne({ _id: req.params.user }, { $addToSet: { savedSongs: req.params.songid } });
+    res.sendStatus(200);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+})
+
+// allow user to save a song name under his account
+// this returns list of ID of user saved songs 
+app.get('/allsavedsongs/:id', async (req,res)=>{
+  try { 
+    console.log(req.params.id) 
+   const user = await User.findById(req.params.id.trim()) 
+   res.json({ 
+     saved_songs: user.savedSongs, 
+   })
+  } catch (err) { 
+   console.error(err) 
+   res.status(400).json({ 
+     success: false, 
+     error: err, 
+   })
+  }
+ })
+
+ //get a user by its id 
+app.get('/user/:id', async (req, res) => { 
+  try { 
+    const user = await User.findById(req.params.id.trim()) 
+    res.json({ 
+      user: user, 
+    })
+  } catch (err) { 
+    res.status(400).json({ 
+      error: err, 
+    })
+  }
+})
+
+///////////////////////////////////////// -- login stuff - phoebus
 //get a song by its id 
-app.get('/:id', async (req, res) => { 
+app.get('/song/:id', async (req, res) => { 
   try { 
     const song = await Song.findById(req.params.id) 
+    console.log("as")
     res.json({ 
       song: song, 
     })
