@@ -1,85 +1,69 @@
-// import './SongCard.css' 
-// import * as React from 'react';
-// import Box from '@mui/material/Box';
-// import Card from '@mui/material/Card';
-// import CardContent from '@mui/material/CardContent';
-// import CardMedia from '@mui/material/CardMedia';
-// import IconButton from '@mui/material/IconButton';
-// import Typography from '@mui/material/Typography';
-// import SkipPreviousIcon from '@mui/icons-material/SkipPrevious';
-// import PlayArrowIcon from '@mui/icons-material/PlayArrow';
-// import SkipNextIcon from '@mui/icons-material/SkipNext';
-// import { useTheme } from '@mui/material/styles';
-// import Link from '@mui/material/Link';
-// import no_url from '../images/no_url.png'
-
-// const Song = props => {
-//   const theme = useTheme();
-//   return (
-//     <Card className = 'Song'>
-//       <span className = "song-id">{props.rank}</span>
-//       <Box sx={{ display: 'flex', flexDirection: 'column', width: 160, }}>
-//         <CardContent sx={{ flex: '1 0 auto', overflow: 'scroll', height: '70px' }}>
-//           <Typography className="song-title" component="div" variant="h5">
-//             <Link href={"/" + props.id}>{props.title}</Link>
-//           </Typography>
-//           <Typography variant="subtitle1" color="text.secondary" component="div">
-//             {props.artist} 
-//           </Typography>
-//         </CardContent>
-//         <Box sx={{ display: 'flex', alignItems: 'center', pl: 1, pb: 1 }}>
-//           <IconButton aria-label="previous">
-//             {theme.direction === 'rtl' ? <SkipNextIcon /> : <SkipPreviousIcon />}
-//           </IconButton>
-//           <IconButton aria-label="play/pause">
-//             <PlayArrowIcon sx={{ height: 38, width: 38 }} />
-//           </IconButton>
-//           <IconButton aria-label="next">
-//             {theme.direction === 'rtl' ? <SkipPreviousIcon /> : <SkipNextIcon />}
-//           </IconButton>
-//         </Box>
-//       </Box>
-//       <CardMedia
-//         component="img"
-//         sx={{ width: 120 }}
-//         image={props.cover === "no_url" ? no_url : props.cover} 
-//         alt="Album cover"
-//       />
-//     </Card>
-//   );
-// }  
-
-// export default Song 
-
 import './SongCard.css'
 import { useState, useEffect } from 'react' 
 import axios from 'axios' 
+import { useNavigate } from 'react-router-dom'
+import SongMessage from './SongMessage' 
 
-export default function SongCard ({rank, song}) { 
+export default function SongCard ({rank, song, savedSongs}) { 
 
-  const [user, setUser] = useState({}) 
+  const [add, setAdd] = useState(savedSongs.indexOf(song._id)==-1) 
+  const [visibility, setVisibility] = useState(false) 
+
+  useEffect(() => { 
+    setAdd(savedSongs.indexOf(song._id)==-1)
+  }, [savedSongs]) 
 
   const token = localStorage.getItem('token') 
 
-  useEffect(() => { 
-    
-  }, [])
+  const handleSong = async () => { 
+    setVisibility(true) 
+    const button = document.getElementById(`addButton${rank}`)
+    if (add) { 
+      axios.get(`${process.env.REACT_APP_BACKEND}/savesong/${song._id}`, {
+        headers: {Authorization: `JWT ${token}`}, 
+      })
+      .catch(err=>console.log(err))
+      setAdd(false) 
+      button.classList.remove('plus') 
+      button.classList.add('minus')
+    }
+    else { 
+      axios.get(`${process.env.REACT_APP_BACKEND}/removesong/${song._id}`, {
+        headers: {Authorization: `JWT ${token}`}, 
+      })
+      .catch(err=>console.log(err))
+      setAdd(true) 
+      button.classList.remove('minus') 
+      button.classList.add('plus')
+    }
+  }
+
+  const navigate = useNavigate() 
+
+  const handleClick = () => { 
+    navigate(`./${song._id}`)
+  }
 
   return ( 
-    <div className='SongCard'> 
-      <span className='rank'> 
-        {rank} 
-      </span>
-      <span className='title'> 
-        {song.url != 'no_url' ? <img className='songCover' src = {song.url} alt='cover' /> : ''} 
-        <span>{song.title}</span> 
-      </span>
-      <span className='artist'> 
-        {song.artist} 
-      </span>
-      <button className='add'> 
-        +
-      </button>
-    </div>
+    <>
+      <div className='SongCard'> 
+        <span className='rank'> 
+          <b>{rank}</b>
+        </span>
+        <span className='title'> 
+          {song.url != 'no_url' ? <img className='songCover' src = {song.url} alt='cover' /> : ''} 
+          <span onClick={handleClick}><b>{song.title}</b></span> 
+        </span>
+        <span className='artist'> 
+          {song.artist}
+        </span>
+        <span className='add'>
+          <button id={`addButton${rank}`} className={`addButton ${add ? 'plus' : 'minus'}`} onClick={handleSong}> 
+            {add ? '+' : '-'}
+          </button>
+        </span>
+      </div>
+      <SongMessage song={song} add={add} visibility={visibility} setVisibility={setVisibility}/>
+    </>
   )
 }

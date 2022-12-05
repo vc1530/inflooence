@@ -7,7 +7,6 @@ export default function LandingScreen () {
 
     const handleScroll = () => { 
         const el = document.getElementById('main')
-        console.log(el) 
         el.scrollIntoView({behavior: "smooth"}) 
     }
 

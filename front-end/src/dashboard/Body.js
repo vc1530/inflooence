@@ -36,7 +36,7 @@ export default function Body () {
             topSongsHeader.style.fontSize = '18pt' 
             predictorHeader.style.fontSize = '18pt' 
         } 
-    };
+    }
 
     useEffect(() => {
         window.addEventListener('scroll', scroll);
@@ -46,16 +46,18 @@ export default function Body () {
     }, [scrollPosition])
 
     return ( 
-        <div className='Body' id='main'> 
+        <div id='main'> 
             <header id='stickyHeader' > 
-                <h3 id='topSongsHeader' onClick={()=>handleClick('topSongsHeader')}> 
+                <h3 id='topSongsHeader' style={{color:'var(--accent-color)'}}onClick={()=>handleClick('topSongsHeader')}> 
                     Top Songs 
                 </h3>
                 <h3 id='predictorHeader' onClick={()=>handleClick('predictorHeader')}> 
                     Predictor 
                 </h3>
             </header>
-            <TopSongs /> 
-        </div>
+            <div className='Body'> 
+                <TopSongs /> 
+            </div>
+        </div> 
     )
 }

@@ -66,7 +66,9 @@ app.use(express.static('public'))
 // app.use("/api/songs", songRouter);
 
 const login = require('./routes/login') 
+const savedSongs = require('./routes/savedSongs') 
 app.use('/', login) 
+app.use('/', savedSongs) 
 
 app.get('/add_test_song', (req, res)=>{
   const song = new Song({
@@ -108,35 +110,6 @@ app.get('/allsongs', async (req,res)=>{
   })
  }
 })
-///////////////////////////////////// -- login stuff - phoebus
-
-// allow user to save a song name under his account
-app.get('/savesong/:user/:songid', async (req, res) => {
-  try {
-    await User.updateOne({ _id: req.params.user }, { $addToSet: { savedSongs: req.params.songid } });
-    res.sendStatus(200);
-  } catch (err) {
-    res.status(500).json({ error: err.message });
-  }
-})
-
-// allow user to save a song name under his account
-// this returns list of ID of user saved songs 
-app.get('/allsavedsongs/:id', async (req,res)=>{
-  try { 
-    console.log(req.params.id) 
-   const user = await User.findById(req.params.id.trim()) 
-   res.json({ 
-     saved_songs: user.savedSongs, 
-   })
-  } catch (err) { 
-   console.error(err) 
-   res.status(400).json({ 
-     success: false, 
-     error: err, 
-   })
-  }
- })
 
  //get a user by its id 
 app.get('/user/:id', async (req, res) => { 
