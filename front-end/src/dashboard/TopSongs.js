@@ -3,16 +3,26 @@ import SongCard from './SongCard'
 import axios from 'axios' 
 import { useState, useEffect } from 'react'
 import { GoSearch } from 'react-icons/go'
+import jwt_decode from 'jwt-decode'
 
 export default function TopSongs () { 
 
     const [songs, setSongs] = useState([]) 
     const [search, setSearch] = useState('') 
+    const [savedSongs, setSavedSongs] = useState([])
+
+    const token = localStorage.getItem('token') 
 
     useEffect(() => { 
         axios.get(`${process.env.REACT_APP_BACKEND}/allsongs`)
         .then(res=>setSongs(res.data.songs)) 
         .catch(err=>console.log(err)) 
+
+        axios.get(`${process.env.REACT_APP_BACKEND}/allsavedsongs`, { 
+            headers: {Authorization : `JWT ${token}`} 
+          }) 
+          .then(res=>setSavedSongs(res.data.saved_songs)) 
+          .catch(err=>console.log(err))
     }, [])
 
     const slideSearch = () => { 
@@ -41,9 +51,6 @@ export default function TopSongs () {
                 <span className='artist'> 
                     Artist 
                 </span>
-                <span className='add'> 
-                    +
-                </span>
             </header>
             {songs
             .filter((song=> { 
@@ -56,6 +63,7 @@ export default function TopSongs () {
                 <SongCard 
                     rank = {i+1} 
                     song = {song} 
+                    savedSongs = {savedSongs} 
                 /> 
             )}
         </div>

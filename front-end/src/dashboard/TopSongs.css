@@ -21,6 +21,11 @@
     background-color: white;
     padding: 10px 10px 10px 0px; 
     margin-top: -10px;  
+    transition: .3s; 
+}
+
+#searchIcon:hover { 
+    color: var(--light-color)!important; 
 }
 
 #searchBar { 
@@ -34,7 +39,7 @@
     font-size: 12pt; 
 }
 
-.search input:focus { 
+#searchBar:focus { 
     border-color: var(--accent-color)!important; 
 }
 

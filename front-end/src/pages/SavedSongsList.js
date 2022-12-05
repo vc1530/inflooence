@@ -1,6 +1,5 @@
-import './Dashboard.css' 
 import Header from '../components/Header' 
-import SongCard from '../components/SongCard'
+import SongCard from '../dashboard/SongCard'
 import { useEffect, useState } from 'react'
 import Typography from '@mui/material/Typography';
 import axios from "axios"

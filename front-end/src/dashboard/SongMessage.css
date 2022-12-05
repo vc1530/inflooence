@@ -1,0 +1,42 @@
+.songMessage { 
+    position: fixed;
+    left: 20px; 
+    bottom: 20px; 
+    height: 80px; 
+    background: white; 
+    border-radius: 10px; 
+    padding: 10px; 
+    z-index: 1;
+    border: solid 1px rgb(239, 239, 239); 
+    box-shadow: rgba(141, 140, 140, 0.15) 4px 4px 6px;
+    overflow: hidden; 
+    display: flex; 
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem; 
+    width: 300px; 
+}
+
+.songCheck { 
+    width: 55px;
+    height: fit-content;  
+}
+
+.songLink { 
+    color: var(--accent-color)!important; 
+}
+
+.songMessage div { 
+    width: 70%; 
+}
+
+.in {
+    opacity: 1;
+    transition: all 500ms linear;
+}
+  
+.out {
+    opacity: 0;
+    transition: all 500ms linear 1.5s;
+}

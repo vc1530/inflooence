@@ -3,14 +3,33 @@ html, body {
   font-family: 'Montserrat', sans-serif; 
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  /* overflow-x: hidden; */
 }
 
 :root { 
   --accent-color: #e91e63; 
+  --light-color: rgb(253, 145, 163); 
+  --green: rgb(65, 179, 65); 
 }
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
+}
+
+@keyframes grow {
+  from { 
+    transform: translateX(-100%)
+  } 
+  to { 
+    transform: translateX(0) 
+  }
+}
+
+@keyframes growBackwards {
+  from { 
+    transform: translateX(100%)
+  } 
+  to { 
+    transform: translateX(0%) 
+  }
 }
