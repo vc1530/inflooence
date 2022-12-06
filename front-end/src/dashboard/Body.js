@@ -34,7 +34,7 @@ export default function Body () {
         const predictorHeader = document.getElementById('predictorHeader')
         const bodyPos = document.getElementById('landing').offsetTop + document.getElementById('landing').offsetHeight - 95; 
         if (scrollPosition > bodyPos) {
-            header.style.height = `30px`
+            header.style.height = `75px`
             header.style.boxShadow = 'rgba(149, 157, 165, 0.2) 0px 8px 24px'
             topSongsHeader.style.fontSize = `14pt`
             predictorHeader.style.fontSize = `14pt`
