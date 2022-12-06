@@ -16,7 +16,6 @@ import Icon from '../images/icon.gif'
 import CustomPopup from "../components/Popup"
 import axios from 'axios';
 import { Navigate } from 'react-router-dom'
-import jwt_decode from 'jwt-decode'
 
 function Copyright(props) {
   return (

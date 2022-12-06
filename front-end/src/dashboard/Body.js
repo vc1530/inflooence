@@ -1,16 +1,25 @@
 import './Body.css'
 import { useState, useEffect } from 'react'  
 import TopSongs from './TopSongs'
+import Predictor from './Predictor'
 
 export default function Body () { 
+
+    const [choice, setChoice] = useState('topSongs') 
 
     const handleClick = (id) => { 
         const el = document.getElementById(id) 
         el.style.borderBottomStyle = 'solid'; 
         el.style.color = 'var(--accent-color)'
         let otherEl; 
-        if (id === 'topSongsHeader') otherEl = document.getElementById('predictorHeader') 
-        else otherEl = document.getElementById('topSongsHeader') 
+        if (id === 'topSongsHeader') { 
+            setChoice('topSongs') 
+            otherEl = document.getElementById('predictorHeader') 
+        } 
+        else { 
+            setChoice('predictor') 
+            otherEl = document.getElementById('topSongsHeader') 
+        } 
         otherEl.style.borderBottomStyle = 'none' 
         otherEl.style.color = 'gray' 
     }
@@ -56,7 +65,7 @@ export default function Body () {
                 </h3>
             </header>
             <div className='Body'> 
-                <TopSongs /> 
+                {choice == 'topSongs' ? <TopSongs /> : <Predictor />} 
             </div>
         </div> 
     )

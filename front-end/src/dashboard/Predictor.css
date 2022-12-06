@@ -1,0 +1,48 @@
+.predictorCard { 
+    width: 80%; 
+    margin: auto; 
+    padding: 30px; 
+    border-radius: 20px; 
+    text-align: left;
+    height: fit-content; 
+}
+
+.white { 
+    
+}
+
+.white h1 { 
+    text-align: left;
+    background: -webkit-linear-gradient(black, var(--accent-color));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.black { 
+    background-color: black; 
+    color: white;
+}
+
+.black h1 { 
+    text-align: right;
+    background: -webkit-linear-gradient(var(--accent-color), white);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.left { 
+    float: left;
+    margin: 0 20px 10px 0;
+    
+}
+
+#fig1, #fig2 { 
+    width: 70%; 
+    min-width: 300px; 
+    border-radius: 10px; 
+}
+
+#fig2 { 
+    display: flex; 
+    margin: auto; 
+}

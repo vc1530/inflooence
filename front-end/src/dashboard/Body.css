@@ -11,7 +11,6 @@
     background-color: white;
     z-index: 1; 
     transition: all .3s; 
-    min-height: 65px; 
     border-radius: 0px 0px 20px 20px; 
 }
 
