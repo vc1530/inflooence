@@ -7,13 +7,12 @@ import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import Checkbox from '@mui/material/Checkbox';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
+import axios from 'axios' 
 
 const CustomPopup = (props) => {
 
@@ -30,11 +29,20 @@ const CustomPopup = (props) => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    console.log({
-      email: data.get('email'),
-      password: data.get('password'),
-    });
+    const data = new FormData(event.currentTarget) 
+    const formData = { 
+      firstName: data.get('firstName'), 
+      lastName: data.get('lastName'), 
+      email: data.get('email'), 
+      password: data.get('password'), 
+    }
+    console.log(formData) 
+    console.log(process.env.REACT_APP_BACKEND)
+    axios.post(`${process.env.REACT_APP_BACKEND}/signup`, formData)
+    .then(res => { 
+      console.log(res)
+    }) 
+    .catch(err=>console.log(err)) 
   };
 
   return (
@@ -107,12 +115,6 @@ const CustomPopup = (props) => {
                       type="password"
                       id="password"
                       autoComplete="new-password"
-                      />
-                  </Grid>
-                  <Grid item xs={12}>
-                      <FormControlLabel
-                      control={<Checkbox value="allowExtraEmails" color="primary" />}
-                      label="I want to receive inspiration, marketing promotions and updates via email."
                       />
                   </Grid>
                   </Grid>

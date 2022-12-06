@@ -67,6 +67,8 @@ app.use(express.static('public'))
 
 const login = require('./routes/login') 
 const savedSongs = require('./routes/savedSongs') 
+const signup = require('./routes/signup')
+app.use('/', signup) 
 app.use('/', login) 
 app.use('/', savedSongs) 
 
