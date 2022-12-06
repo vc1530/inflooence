@@ -1,0 +1,37 @@
+#stickyHeader { 
+    height: 100px; 
+    display: flex; 
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap: 2rem; 
+    position: sticky; 
+    position: -webkit-sticky; 
+    top: 95px; 
+    background-color: white;
+    z-index: 1; 
+    transition: all .3s; 
+}
+
+#stickyHeader h3 { 
+    padding: 5px 0; 
+    border-color: var(--accent-color);
+    border-width: 2px;
+    font-size: 18pt; 
+    transition: all .3s; 
+    color: gray; 
+}
+
+#stickyHeader h3:hover { 
+    color: var(--accent-color)!important;
+}
+
+.Body { 
+    width: 80%; 
+    margin: auto; 
+}
+
+#topSongsHeader {
+    color: var(--accent-color); 
+    border-bottom-style: solid;
+}

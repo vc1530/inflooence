@@ -1,0 +1,78 @@
+.SongCard { 
+    display: flex; 
+    flex-direction: row;
+    margin:auto;  
+    height: 140px; 
+    align-items: center;
+    transition: .5s;  
+    border-radius: 20px; 
+}
+
+.SongCard span { 
+    color: black!important; 
+}
+
+.SongCard:hover{ 
+    background-color: rgb(253, 234, 237);
+    transition: .5s;  
+}
+
+.SongCard .rank {
+    font-size: x-large;
+    font-style: bold; 
+    /* color: gray!important;   */
+}
+
+.songCover { 
+    width: 100px; 
+    height: 100px;
+    border-radius: 10px;  
+}
+
+.title { 
+    display: flex; 
+    flex-direction: row; 
+    align-items: center;
+    gap: 1rem;
+}
+
+.title span { 
+    color: var(--accent-color)!important; 
+    transition: .3s; 
+}
+
+.title span:hover { 
+    color: var(--light-color)!important; 
+    transition: .3s; 
+}
+
+.addButton {
+    display: flex; 
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%; 
+    height: 40px; 
+    width: 40px; 
+    font-size: 24pt; 
+    border: solid 2px; 
+    transition: .3s; 
+}
+
+.plus {
+    background-color: var(--accent-color);
+    color: white; 
+}
+
+.plus:hover { 
+    background-color: var(--light-color);
+}
+
+.minus { 
+    background-color: white;
+    color: var(--accent-color); 
+}
+
+.minus:hover { 
+    color: var(--light-color); 
+}

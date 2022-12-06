@@ -1,0 +1,161 @@
+.Song { 
+    margin-top: 95px!important; 
+    /* width: 80%;  */
+    margin: auto; 
+}
+
+#songPageHeader { 
+    /* border-radius: 20px; 
+    width: 580px;  */
+    padding: 20px; 
+    display: flex; 
+    flex-direction: row;
+    justify-content: center;
+    gap: 2rem; 
+    background-image: linear-gradient(var(--light-color), white);
+    height: fit-content; 
+    position: sticky; 
+    position: -webkit-sticky; 
+    top: 95px; 
+    z-index: 1; 
+    transition: all .3s; 
+}
+
+#albumCover { 
+    height: 175px; 
+    border-radius: 20px; 
+    transition: all .3s; 
+}
+
+#titleArtist { 
+    display: flex; 
+    flex-direction: column;
+    gap: 2rem; 
+    color: rgb(0, 0, 0); 
+    text-align: left;
+}
+
+#titleArtist h1, #titleArtist h2 { 
+    margin: 0; 
+}
+
+#titleArtist h1 { 
+    font-size: 28pt;
+}
+
+#titleArtist div { 
+    display: flex; 
+    flex-direction: row; 
+    gap: 1rem;
+}
+
+#headers { 
+    display: flex; 
+    flex-direction: column!important;
+    gap: .5rem!important; 
+}
+
+#saveSong { 
+    border-radius: 20px;
+    border: none; 
+    padding: 10px; 
+    font-size: 14pt;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: bold; 
+    background-color: white;
+    width: 175px; 
+    transition: .3s;
+    height: fit-content; 
+    border: solid 1px; 
+}
+
+#saveSong:hover { 
+    transition: .3s; 
+}
+
+.saveThisSong { 
+    color: var(--accent-color); 
+}
+
+.saveThisSong:hover { 
+    color: var(--light-color)!important; 
+}
+
+.saved { 
+    color: var(--green)!important;
+}
+
+.saved:hover { 
+    color: rgb(137, 214, 137)!important; 
+}
+
+#seeAnalytics { 
+    display: flex;
+    align-items: center;
+    font-size: 14pt;
+    font-weight: bold; 
+    color: var(--accent-color); 
+}
+
+#analytics { 
+    width: 580px; 
+    margin: auto; 
+    margin-top: 20px; 
+    display: flex; 
+    flex-direction: column;
+    gap: 2rem;
+}
+
+.analyticsDiv { 
+    display: flex; 
+    flex-direction: column;
+    gap: .5rem; 
+    text-align: left;
+    padding: 10px; 
+}
+
+.label { 
+    margin-left: 25px; 
+    font-weight: bold; 
+    font-size: 12pt; 
+    display: flex; 
+    flex-direction: row; 
+    gap: .5rem; 
+}
+
+.questionIcon { 
+    color: rgb(188, 188, 188); 
+    display: flex; 
+    align-items: center;
+}
+
+.display { 
+    display: flex;
+    flex-direction: row;
+    gap: .3rem; 
+    font-size: small;
+    align-items: center;
+}
+
+.analyticsBox { 
+    overflow: hidden; 
+    background: rgb(237, 237, 237);
+    height: 25px; 
+    border-radius: 20px; 
+    display: flex; 
+    justify-content: left;
+    width: 550px; 
+}
+
+.loudnessBox { 
+    justify-content: right!important;
+}
+
+.analyticsBar { 
+    background-color: var(--accent-color);
+    animation: grow 2s; 
+}
+
+.loudnessBar { 
+    animation: growBackwards 2s!important; 
+}

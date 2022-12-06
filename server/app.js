@@ -1,21 +1,213 @@
-//var client_id = '0048909068294db1b98e49ed9c7d5dc8'; // Your client id
-//var client_secret = 'ba457fdecdc3453c87b7e5aaba0123fc'; // Your secret
-//var redirect_uri = 'http://localhost:8888/callback'; // Your redirect uri
-//var scopes = \'user-read-private user-read-email\'
-import spotipy
-from spotipy.oauth2 import SpotifyClientCredentials
-
-birdy_uri = 'spotify:artist:2WX2uTcsvV5OnS0inACecP'
-spotify = spotipy.Spotify(client_credentials_manager=SpotifyClientCredentials())
-
-results = spotify.artist_albums(birdy_uri, album_type='album')
-albums = results['items']
-while results['next']:
-    results = spotify.next(results)
-    albums.extend(results['items'])
-
-for album in albums:
-    print(album['name'])
+// import express JS module into app
+// and creates its variable.
+const express = require('express');
+const app = express();
+const morgan = require('morgan');
+const Song = require('./songModel.js')
+const cors = require('cors')
+const User = require('./models/User.js')
 
 
+// enable cors
+app.use(cors())
+const path = require('path') 
+// const PORT = process.env.PORT || 8888
+const PORT = 8888
 
+
+require("dotenv").config({ silent: true })
+
+
+app.listen(PORT, function() {
+    console.log('server running on port 8888 / render');
+} )
+app.use(express.json());
+
+// const { spawn } = require('node:child_process');
+const { spawn } = require('child_process');
+
+const childPython = spawn('python3', ['main.py']);
+// console.log(childPython)
+
+childPython.stdout.on('data', (data) => {
+  console.log(`stdout: ${data}`);
+});
+
+// childPython.stderr.on('data', (data) => {
+//   console.error(`stderr: ${data}`);
+// });
+
+// childPython.on('close', (code) => {
+//   console.log(`child process exited with code ${code}`);
+// });
+
+const mongoose = require("mongoose");
+//configure mongoose
+mongoose.connect(
+  "mongodb+srv://INFLOOENCE:INFLOOENCE@inflooence.wode3u7.mongodb.net/inflooence?retryWrites=true&w=majority",
+  {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+  },
+  (err) => {
+    if (err) {
+      console.log(err);
+    } else {
+      console.log("Connected to MongoDB");
+    }
+  }
+);
+
+// middleware
+app.use(morgan('dev'))
+app.use(express.static('public')) 
+
+// const songRouter = require("./routes");
+// app.use("/api/songs", songRouter);
+
+const login = require('./routes/login') 
+const savedSongs = require('./routes/savedSongs') 
+const signup = require('./routes/signup')
+app.use('/', signup) 
+app.use('/', login) 
+app.use('/', savedSongs) 
+
+app.get('/add_test_song', (req, res)=>{
+  const song = new Song({
+    title: "testing",
+    artist: "String",
+    spotify_id: "String",
+    acousticness: "String",
+    danceability: "String",
+    energy: "String",
+    liveness: "String",
+    loudness: "String",
+    tempo: "String",
+    time_signature: "String",
+    url: "String",  
+  });
+
+    song.save()
+      .then((result) => {
+        res.send(result)
+      })
+      .catch((err) => {
+        console.log(err)
+    })
+})
+
+// getter
+app.get('/allsongs', async (req,res)=>{
+ try { 
+  const songs = await Song.find({}) 
+  res.json({ 
+    success: true, 
+    songs: songs, 
+  })
+ } catch (err) { 
+  console.error(err) 
+  res.status(400).json({ 
+    success: false, 
+    error: err, 
+  })
+ }
+})
+
+ //get a user by its id 
+app.get('/user/:id', async (req, res) => { 
+  try { 
+    const user = await User.findById(req.params.id.trim()) 
+    res.json({ 
+      user: user, 
+    })
+  } catch (err) { 
+    res.status(400).json({ 
+      error: err, 
+    })
+  }
+})
+
+///////////////////////////////////////// -- login stuff - phoebus
+//get a song by its id 
+app.get('/song/:id', async (req, res) => { 
+  try { 
+    const song = await Song.findById(req.params.id) 
+    console.log("as")
+    res.json({ 
+      song: song, 
+    })
+  } catch (err) { 
+    res.status(400).json({ 
+      error: err, 
+    })
+  }
+})
+
+// apparently needed to be hosted
+app.get('/', (req, res) => {
+  res.sendStatus(200)
+})
+
+
+//this is me trying to implement login 
+//just for funsies 
+// - vanessa 
+// const Users = [ 
+//   { 
+//       id: 1, 
+//       email: "inflooence.testing@gmail.com", 
+//       password: "inflooence.testing", 
+//   }
+// ]
+
+// const jwt = require("jsonwebtoken")
+
+//creating a jwt to send back to front end 
+// app.post('/login', (req, res) => { 
+//   console.log(req.body);
+//   const user = Users.find(user => 
+//     user.email == req.body.email && user.password == req.body.password
+//   )
+//   const token = jwt.sign({id: user.id}, jwtOptions.secretOrKey) 
+//   res.json({ 
+//     success: true, 
+//     token: token, 
+//     id: user.id, 
+//   })
+// })
+
+//IGNORE THIS FOR NOW... 
+//i was trying to implement google login but it is not working haha 
+// const passport = require("passport")
+// app.use(passport.initialize())
+
+// const { jwtOptions, jwtStrategy } = require("./jwt-config.js") 
+// passport.use(jwtStrategy)
+
+// const passport_jwt = passport.authenticate('jwt', { session: false }) 
+// app.use(passport_jwt)
+
+// require('./google-strategy.js') 
+// const passport_google = passport.authenticate( 'google', {
+//   successRedirect: '/auth/google/success',
+//   failureRedirect: '/auth/google/failure', 
+//   session: false, 
+// })
+// app.use(passport_google) 
+
+// //this is the part that doesn't work lol 
+// app.get('/user', (req, res) => { 
+//   console.log(req.user) 
+//   res.json({ 
+//     success: true, 
+//     user: req.user, 
+//   })
+// })
+
+// app.get('/oauth2/redirect/google',
+//   passport.authenticate('google', { failureRedirect: '/login', failureMessage: true }),
+//   function(req, res) {
+//     res.redirect('/');
+//   });
+
+module.exports = app;
