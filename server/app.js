@@ -11,8 +11,8 @@ const User = require('./models/User.js')
 // enable cors
 app.use(cors())
 const path = require('path') 
-// const PORT = process.env.PORT || 8888
-const PORT = 8888
+const PORT = process.env.PORT || 8888
+// const PORT = process.env.PORT
 
 
 require("dotenv").config({ silent: true })
