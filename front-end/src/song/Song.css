@@ -1,12 +1,13 @@
 .Song { 
-    margin-top: 95px!important; 
-    /* width: 80%;  */
+    margin-top: 85px; 
     margin: auto; 
 }
 
+.SongInfo { 
+    margin-top: 85px; 
+}
+
 #songPageHeader { 
-    /* border-radius: 20px; 
-    width: 580px;  */
     padding: 20px; 
     display: flex; 
     flex-direction: row;
@@ -16,7 +17,7 @@
     height: fit-content; 
     position: sticky; 
     position: -webkit-sticky; 
-    top: 95px; 
+    top: 85px; 
     z-index: 1; 
     transition: all .3s; 
 }
@@ -33,6 +34,7 @@
     gap: 2rem; 
     color: rgb(0, 0, 0); 
     text-align: left;
+    padding: 5px; 
 }
 
 #titleArtist h1, #titleArtist h2 { 
@@ -103,7 +105,7 @@
     margin-top: 20px; 
     display: flex; 
     flex-direction: column;
-    gap: 2rem;
+    gap: 1rem;
 }
 
 .analyticsDiv { 
@@ -129,12 +131,16 @@
     align-items: center;
 }
 
-.display { 
+.display, .secondDisplay { 
     display: flex;
     flex-direction: row;
     gap: .3rem; 
     font-size: small;
     align-items: center;
+}
+
+.secondDisplay { 
+    display: none 
 }
 
 .analyticsBox { 
