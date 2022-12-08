@@ -3,10 +3,11 @@ import { useState, useEffect } from 'react'
 import axios from 'axios' 
 import { useNavigate } from 'react-router-dom'
 import SongMessage from './SongMessage' 
+import { PromiseProvider } from 'mongoose'
 
-export default function SongCard ({rank, song, savedSongs}) { 
+export default function SongCard ({rank, song, savedSongs, loggedIn}) { 
 
-  const [add, setAdd] = useState(savedSongs.indexOf(song._id)==-1) 
+  const [add, setAdd] = useState(savedSongs.indexOf(song._id)==-1)
   const [visibility, setVisibility] = useState(false) 
 
   useEffect(() => { 
@@ -41,7 +42,7 @@ export default function SongCard ({rank, song, savedSongs}) {
   const navigate = useNavigate() 
 
   const handleClick = () => { 
-    navigate(`./${song._id}`)
+    navigate(`/${song._id}`)
   }
 
   return ( 
@@ -58,9 +59,12 @@ export default function SongCard ({rank, song, savedSongs}) {
           {song.artist}
         </span>
         <span className='add'>
-          <button id={`addButton${rank}`} className={`addButton ${add ? 'plus' : 'minus'}`} onClick={handleSong}> 
-            {add ? '+' : '-'}
-          </button>
+          {loggedIn ?
+            <button id={`addButton${rank}`} className={`addButton ${add ? 'plus' : 'minus'}`} onClick={handleSong}> 
+              {add ? '+' : '-'}
+            </button> : 
+            '' 
+          }
         </span>
       </div>
       <SongMessage song={song} add={add} visibility={visibility} setVisibility={setVisibility}/>

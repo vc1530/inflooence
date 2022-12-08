@@ -1,13 +1,11 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
-import Login from './pages/Login'
+import Login from './login/Login'
 import Dashboard from './dashboard/Dashboard' 
-import Profile from './pages/Profile' 
-import Song from './pages/Song'
-import SavedSongsList from './pages/SavedSongsList'
+import Profile from './profile/Profile' 
+import Song from './song/Song'
 import './App.css';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { green, pink } from '@mui/material/colors';
-import TestML from './pages/TestML'
 
 const theme = createTheme(
   {
@@ -37,14 +35,10 @@ function App() {
         <Router>
           <main className="App-main">
             <Routes>
+              <Route path="/profile" element={<Profile />} /> 
               <Route path="/login" element={<Login />} />
               <Route path="/" element={<Dashboard />} /> 
-              <Route path="/profile" element={<Profile />} /> 
               <Route path="/:id" element={<Song />} /> 
-              <Route path="/test" element={<TestML />} />
-              <Route path="/viewsavedsongs" element={<SavedSongsList />} /> 
-
-
             </Routes> 
           </main>
         </Router>

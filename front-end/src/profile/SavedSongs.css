@@ -1,0 +1,81 @@
+#savedSongs header { 
+    height: 50px; 
+    background-color: rgb(220, 220, 220);
+    border-radius: 10px; 
+    display: flex; 
+    flex-direction: row; 
+    justify-content: left;
+    align-items: center;
+}
+
+.search { 
+    color: var(--accent-color);
+    display: flex; 
+    justify-content: right;  
+    align-items: center;
+    gap: .5rem; 
+    overflow: hidden; 
+}
+
+#searchIcon { 
+    background-color: white;
+    padding: 10px 10px 10px 0px; 
+    margin-top: -10px;  
+    transition: .3s; 
+}
+
+#searchIcon:hover { 
+    color: var(--light-color)!important; 
+}
+
+#searchBar { 
+    border-radius: 10px; 
+    border: solid 1px lightgray; 
+    padding: 10px; 
+    font-family: 'Montserrat', sans-serif;
+    margin-right: -250px;  
+    transition: .5s; 
+    margin-bottom: 10px; 
+    font-size: 12pt; 
+}
+
+#searchBar:focus { 
+    border-color: var(--accent-color)!important; 
+}
+
+#savedSongs span { 
+    padding: 10px; 
+    color: gray; 
+}
+
+.rank, .add { 
+    justify-content: center;
+}
+
+.title, .artist { 
+    text-align: left;
+}
+
+.rank { 
+    width: 10%; 
+}
+
+.title { 
+    width: 40%; 
+}
+
+.artist { 
+    width: 30%; 
+}
+
+.add { 
+    width: 10%; 
+}
+
+a { 
+    color: var(--accent-color);
+}
+
+#none {
+    padding: 50px; 
+}

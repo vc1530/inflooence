@@ -1,0 +1,20 @@
+.Popup { 
+    z-index: 1; 
+}
+
+.successPage { 
+    display: flex; 
+    flex-direction: column; 
+    justify-content: center; 
+    align-items: center;
+    margin-top: 50px;
+}
+
+#successCheck { 
+    width: 150px; 
+}
+
+.successPage span {
+    margin-top: 30px; 
+    font-size: 18pt;
+}

@@ -15,8 +15,8 @@ export default function Header () {
         <button onClick={()=>navigate('/login')}>
           Log in
         </button>
-        <button> 
-          Sidebar
+        <button onClick={()=>navigate('/profile')}> 
+          Profile
         </button>
       </div>
     </div>
