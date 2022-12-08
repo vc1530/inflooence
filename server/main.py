@@ -20,8 +20,7 @@ from search_spotify import search_sp
 
 from spotipy.oauth2 import SpotifyClientCredentials
 import spotipy
-import sys
-import pprint
+import pymongo
 import json
 from pymongo import MongoClient, InsertOne
 from fastapi import FastAPI
@@ -84,17 +83,17 @@ SPOTIPY_REDIRECT_URI="http://localhost:8888/callback"
 
 # # ------------ SCRAPING --------------------###
 
-# driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()), options = browser_options)
+driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()), options = browser_options)
 
-# driver.get('http://webcache.googleusercontent.com/search?q=cache:https://tokboard.com/')
+driver.get('http://webcache.googleusercontent.com/search?q=cache:https://tokboard.com/')
 
-# soup = BeautifulSoup(driver.page_source, "html.parser")
+soup = BeautifulSoup(driver.page_source, "html.parser")
 
-# # initiate variables
-# list_songs_arr = []
-# songs_list = soup.select('.title')
-# artist_list = soup.select('.artist')
-# list_songs_obj = []
+# initiate variables
+list_songs_arr = []
+songs_list = soup.select('.title')
+artist_list = soup.select('.artist')
+list_songs_obj = []
 
 # limitless scroll, test timeout
 # time.sleep(2)  # Allow 2 seconds for the web page to open
@@ -112,60 +111,60 @@ SPOTIPY_REDIRECT_URI="http://localhost:8888/callback"
 #     # Break the loop when the height we need to scroll to is larger than the total scroll height
 #     if (screen_height) * i > scroll_height:
 #         break
-# end limitless scroll
+# # end limitless scroll
 
-# # get spotify wrapper
-# sp = spotipy.Spotify(client_credentials_manager=SpotifyClientCredentials())
-
-
-# i = 1
-# j = 0
+# get spotify wrapper
+sp = spotipy.Spotify(client_credentials_manager=SpotifyClientCredentials())
 
 
-
-# while i < len(songs_list):
-#     params = [songs_list[i].get_text(), artist_list[j].get_text()]
-#     for element in search_sp(songs_list[i].get_text(), artist_list[j].get_text()):
-#         params.append(element)
-
-#     new_song_obj = Song(params)
-
-#     #### debug tool: display each song object
-#     # song_obj_new.display_info()
-
-#     ### DEBUG
-
-#     # add new object to array of all song objects
-#     list_songs_obj.append(new_song_obj)
-#     list_songs_arr.append(params)
-#     i += 1
-#     j += 1
-
-# # write JSON files to JSON text db
-# outfile = open('json_db.json', 'w')
-# outfile.write(json.dumps([ob.__dict__ for ob in list_songs_obj]))
-# outfile.close()
+i = 1
+j = 0
 
 
-# # ------------ SCRAPING --------------- END
 
-# # ----------------------------- MONGODB ----------------------###
-# myclient = pymongo.MongoClient("mongodb+srv://INFLOOENCE:INFLOOENCE@inflooence.wode3u7.mongodb.net/?retryWrites=true&w=majority")
-# db = myclient["inflooence"]
-# collection = db["songs"]
-# # open file
-# with open('json_db.json') as file:
-#     file_data = json.load(file)
+while i < len(songs_list):
+    params = [songs_list[i].get_text(), artist_list[j].get_text()]
+    for element in search_sp(songs_list[i].get_text(), artist_list[j].get_text()):
+        params.append(element)
 
-# # Inserting the loaded data in the Collection
-# # if JSON contains data more than one entry
-# # insert_many is used else insert_one is used
-# myclient.drop_database('inflooence')
+    new_song_obj = Song(params)
 
-# if isinstance(file_data, list):
-#     collection.insert_many(file_data)
-# else:
-#     collection.insert_one(file_data)
+    #### debug tool: display each song object
+    # song_obj_new.display_info()
+
+    ### DEBUG
+
+    # add new object to array of all song objects
+    list_songs_obj.append(new_song_obj)
+    list_songs_arr.append(params)
+    i += 1
+    j += 1
+
+# write JSON files to JSON text db
+outfile = open('json_db.json', 'w')
+outfile.write(json.dumps([ob.__dict__ for ob in list_songs_obj]))
+outfile.close()
+
+
+# ------------ SCRAPING --------------- END
+
+# ----------------------------- MONGODB ----------------------###
+myclient = pymongo.MongoClient("mongodb+srv://INFLOOENCE:INFLOOENCE@inflooence.wode3u7.mongodb.net/?retryWrites=true&w=majority")
+db = myclient["inflooence"]
+collection = db["songs"]
+# open file
+with open('json_db.json') as file:
+    file_data = json.load(file)
+
+# Inserting the loaded data in the Collection
+# if JSON contains data more than one entry
+# insert_many is used else insert_one is used
+myclient.drop_database('inflooence')
+
+if isinstance(file_data, list):
+    collection.insert_many(file_data)
+else:
+    collection.insert_one(file_data)
 
 # # --------- MONGODB ----------------- END
 
