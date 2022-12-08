@@ -1,6 +1,8 @@
 const express = require('express') 
 const router = express.Router() 
 const User = require('../models/User')
+const Song = require('../songModel')
+const ObjectId = require('mongodb').ObjectId
 
 const { jwtStrategy } = require("./jwt-config.js") 
 const passport = require("passport")
@@ -34,21 +36,21 @@ router.get('/removesong/:id', passport.authenticate('jwt', {session: false}), as
         res.status(500).json({ error: err.message });
     }
 })
-  // allow user to save a song name under his account
-  // this returns list of ID of user saved songs 
-  router.get('/allsavedsongs', passport.authenticate('jwt', {session: false}), async (req,res)=>{
-    try { 
-     //const user = await User.findById(req.user._id) 
-     res.json({ 
-       saved_songs: req.user.savedSongs, 
-     })
-    } catch (err) { 
-     console.error(err) 
-     res.status(400).json({ 
-       success: false, 
-       error: err, 
-     })
-    }
-   })
+// allow user to save a song name under his account
+// this returns list of ID of user saved songs 
+router.get('/allsavedsongs', passport.authenticate('jwt', {session: false}), async (req,res)=>{
+  try { 
+    res.json({ 
+      saved_songs: req.user.savedSongs, 
+      success: true, 
+    })
+  } catch (err) { 
+    console.error(err) 
+    res.status(400).json({ 
+      success: false, 
+      error: err, 
+    })
+  }
+})
 
-   module.exports = router 
+module.exports = router 

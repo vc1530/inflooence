@@ -1,4 +1,8 @@
-#stickyHeader { 
+.profile { 
+    margin-top: 70px; 
+}
+
+#profileHeader { 
     height: 100px; 
     display: flex; 
     flex-direction: row;
@@ -13,7 +17,7 @@
     transition: all .3s; 
 }
 
-#stickyHeader h3 { 
+#profileHeader h3 { 
     padding: 5px 0; 
     border-color: var(--accent-color);
     border-width: 2px;
@@ -22,16 +26,12 @@
     color: gray; 
 }
 
-#stickyHeader h3:hover { 
+#profileHeader h3:hover { 
     color: var(--accent-color)!important;
 }
 
-.Body { 
-    width: 80%; 
+#body { 
+    width: 80%;  
     margin: auto; 
-}
-
-#topSongsHeader {
-    color: var(--accent-color); 
-    border-bottom-style: solid;
+    margin-top: 15px; 
 }

@@ -4,8 +4,6 @@ import {useState} from 'react';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import Checkbox from '@mui/material/Checkbox';
 import Link from '@mui/material/Link';
 import Paper from '@mui/material/Paper';
 import Box from '@mui/material/Box';
@@ -13,9 +11,9 @@ import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
 import { pink } from '@mui/material/colors';
 import Icon from '../images/icon.gif'
-import CustomPopup from "../components/Popup"
+import CustomPopup from "./Popup"
 import axios from 'axios';
-import { Navigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 
 function Copyright(props) {
   return (
@@ -32,7 +30,9 @@ function Copyright(props) {
 
 export default function Login() {
 
-  const [token, setToken] = useState('')
+  const navigate = useNavigate() 
+
+  const [loggedIn, setLoggedIn] = useState(false)
   const [visibility, setVisibility] = useState(false) 
 
   const popupCloseHandler = (e) => {
@@ -53,32 +53,12 @@ export default function Login() {
         formData
       )
       localStorage.setItem("token", res.data.token)
-      setToken(localStorage.getItem('token'))
+      setLoggedIn(true) 
     } catch (err) { 
+      setLoggedIn(false) 
       console.log(err)
     } 
   }
-
-  // //handles decoding the token that the google api creates 
-  // const handleResponse = async (res) => { 
-  //   localStorage.setItem("token", res.credential)
-  //   setToken(localStorage.getItem('token'))
-  //   const user = jwt_decode(res.credential)
-  // }
-
-  // //google login 
-  // useEffect (() => { 
-  //   /* global google */ 
-  //   google.accounts.id.initialize({ 
-  //     client_id: "763591101926-70b39abj3og3mclecrhhsdhmtkctlci5.apps.googleusercontent.com", 
-  //     callback: handleResponse, 
-  //   })
-  //   google.accounts.id.renderButton( 
-  //     document.getElementById("signInDiv"), 
-  //     {theme: "outline", size: "large"}
-  //   )
-  //   google.accounts.id.prompt()
-  // }, [])
 
   const page = (
     <Grid container component="main" sx={{ height: '100vh' }}>
@@ -130,10 +110,6 @@ export default function Login() {
               id="password"
               autoComplete="current-password"
             />
-            <FormControlLabel
-              control={<Checkbox value="remember" color="primary" />}
-              label="Remember me"
-            />
             <Button
               type="submit"
               fullWidth
@@ -144,12 +120,7 @@ export default function Login() {
             </Button>
             <Grid container justifyContent='center'>
               <Grid item m>
-                <Link href="#" variant="body2">
-                  Forgot password?
-                </Link>
-              </Grid>
-              <Grid item m>
-                <Link variant="body2" sx={{color: pink[500]}} onClick={e => setVisibility(!visibility)}>
+                <Link variant="body2" sx={{color: pink[500], fontSize: '11pt'}} onClick={e => setVisibility(!visibility)}>
                   {"Don't have an account? Sign Up"}
                 </Link>
                 <div id="signInDiv">
@@ -163,8 +134,8 @@ export default function Login() {
       <CustomPopup onClose={popupCloseHandler} show={visibility}>
       </CustomPopup>
     </Grid>
-    ) 
+  ) 
     
-  return token ?  <Navigate to="/" /> :  page 
+  return loggedIn ? navigate('/') : page
 
 }

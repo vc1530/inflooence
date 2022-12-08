@@ -1,0 +1,12 @@
+.Header, .Footer { 
+    box-sizing: content-box!important; 
+}
+
+.settingsField { 
+    text-align: left;
+}
+
+.settingsLabel { 
+    margin-left: 5px; 
+}
+

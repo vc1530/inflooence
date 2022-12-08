@@ -1,5 +1,5 @@
 import './TopSongs.css'
-import SongCard from './SongCard' 
+import SongCard from '../song/SongCard' 
 import axios from 'axios' 
 import { useState, useEffect } from 'react'
 import { GoSearch } from 'react-icons/go'
@@ -10,6 +10,7 @@ export default function TopSongs () {
     const [songs, setSongs] = useState([]) 
     const [search, setSearch] = useState('') 
     const [savedSongs, setSavedSongs] = useState([])
+    const [loggedIn, setLoggedIn] = useState(false) 
 
     const token = localStorage.getItem('token') 
 
@@ -21,8 +22,14 @@ export default function TopSongs () {
         axios.get(`${process.env.REACT_APP_BACKEND}/allsavedsongs`, { 
             headers: {Authorization : `JWT ${token}`} 
           }) 
-          .then(res=>setSavedSongs(res.data.saved_songs)) 
-          .catch(err=>console.log(err))
+          .then(res=>{ 
+            setLoggedIn(true) 
+            setSavedSongs(res.data.saved_songs)
+          }) 
+          .catch(err=>{
+            setLoggedIn(false) 
+            console.log(err)
+          })
     }, [])
 
     const slideSearch = () => { 
@@ -64,6 +71,7 @@ export default function TopSongs () {
                     rank = {i+1} 
                     song = {song} 
                     savedSongs = {savedSongs} 
+                    loggedIn={loggedIn} 
                 /> 
             )}
         </div>

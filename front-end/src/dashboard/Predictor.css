@@ -7,10 +7,6 @@
     height: fit-content; 
 }
 
-.white { 
-    
-}
-
 .white h1 { 
     text-align: left;
     background: -webkit-linear-gradient(black, var(--accent-color));
