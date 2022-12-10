@@ -3,7 +3,7 @@ import { useState, useEffect } from 'react'
 import axios from 'axios' 
 import { useNavigate } from 'react-router-dom'
 import SongMessage from './SongMessage' 
-import { PromiseProvider } from 'mongoose'
+// import { PromiseProvider } from 'mongoose'
 
 export default function SongCard ({rank, song, savedSongs, loggedIn}) { 
 
@@ -52,7 +52,7 @@ export default function SongCard ({rank, song, savedSongs, loggedIn}) {
           <b>{rank}</b>
         </span>
         <span className='title'> 
-          {song.url != 'no_url' ? <img className='songCover' src = {song.url} alt='cover' /> : ''} 
+          {song.url != 'no_url' ? <img className='songCover' src = {song.url} alt='cover' /> : <img className='songCover' src = {'https://medicikalif.com/wp-content/plugins/beatstore-wp/players/widget3/src/images/DefaultAlbumArt.png'} alt='cover' />} 
           <span onClick={handleClick}><b>{song.title}</b></span> 
         </span>
         <span className='artist'> 
