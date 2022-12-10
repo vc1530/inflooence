@@ -4,6 +4,8 @@ import axios from 'axios'
 import { useState, useEffect } from 'react'
 import { GoSearch } from 'react-icons/go'
 import jwt_decode from 'jwt-decode'
+import ClipLoader from 'react-spinners/ClipLoader';
+
 
 export default function TopSongs () { 
 
@@ -11,6 +13,7 @@ export default function TopSongs () {
     const [search, setSearch] = useState('') 
     const [savedSongs, setSavedSongs] = useState([])
     const [loggedIn, setLoggedIn] = useState(false) 
+    const [loaded, setLoaded] = useState(false)
 
     const token = localStorage.getItem('token') 
 
@@ -25,10 +28,13 @@ export default function TopSongs () {
           .then(res=>{ 
             setLoggedIn(true) 
             setSavedSongs(res.data.saved_songs)
+            setLoaded(true)
           }) 
           .catch(err=>{
             setLoggedIn(false) 
             console.log(err)
+            // ******* note: if you test on local you should uncomment this, it'll never load properly on local because our frontend on our server is on netlify
+            // setLoaded(true)
           })
     }, [])
 
@@ -38,6 +44,7 @@ export default function TopSongs () {
     }
 
     return ( 
+        
         <div id='topSongs'> 
             <div className='search'> 
                 <input
@@ -59,6 +66,10 @@ export default function TopSongs () {
                     Artist 
                 </span>
             </header>
+
+            {/* see above ************* comment for loading screen */}
+            {!loaded ? (<ClipLoader color="#ff0050" size={100}/>) : ''}
+
             {songs
             .filter((song=> { 
                 if (search==='') return song 
