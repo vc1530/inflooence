@@ -43,10 +43,6 @@ export default function TopSongs () {
 
     }, [])
 
-    useEffect(() => {
-
-    }, [loaded])
-
     const slideSearch = () => { 
         const searchBar = document.getElementById('searchBar') 
         searchBar.style.marginRight = '0px' 
