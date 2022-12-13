@@ -118,6 +118,9 @@ export default function Login() {
             >
               Sign In
             </Button>
+            <Link color="inherit" href="/">
+        Return to Home Page Without Signing In
+      </Link>{' '}
             <Grid container justifyContent='center'>
               <Grid item m>
                 <Link variant="body2" sx={{color: pink[500], fontSize: '11pt'}} onClick={e => setVisibility(!visibility)}>

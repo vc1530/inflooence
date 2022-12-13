@@ -19,23 +19,28 @@ export default function TopSongs () {
 
     useEffect(() => { 
         axios.get(`${process.env.REACT_APP_BACKEND}/allsongs`)
-        .then(res=>setSongs(res.data.songs)) 
+        .then(res=>{
+            setSongs(res.data.songs)
+            setLoaded(true)
+        }) 
         .catch(err=>console.log(err)) 
 
-        axios.get(`${process.env.REACT_APP_BACKEND}/allsavedsongs`, { 
-            headers: {Authorization : `JWT ${token}`} 
-          }) 
-          .then(res=>{ 
-            setLoggedIn(true) 
-            setSavedSongs(res.data.saved_songs)
-            setLoaded(true)
-          }) 
-          .catch(err=>{
-            setLoggedIn(false) 
-            console.log(err)
-            // ******* note: if you test on local you should uncomment this, it'll never load properly on local because our frontend on our server is on netlify
-            // setLoaded(true)
-          })
+        if(token){
+            axios.get(`${process.env.REACT_APP_BACKEND}/allsavedsongs`, { 
+                headers: {Authorization : `JWT ${token}`} 
+              }) 
+              .then(res=>{ 
+                setLoggedIn(true) 
+                setSavedSongs(res.data.saved_songs)
+              }) 
+              .catch(err=>{
+                setLoggedIn(false) 
+                console.log(err)
+                // ******* note: if you test on local you should uncomment this, it'll never load properly on local because our frontend on our server is on netlify
+                // setLoaded(true)
+              })
+        }
+
     }, [])
 
     const slideSearch = () => { 
